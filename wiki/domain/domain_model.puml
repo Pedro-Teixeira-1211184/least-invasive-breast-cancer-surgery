@@ -3,24 +3,57 @@
 hide methods
 
 
-package Pacientes {
-entity Paciente <root> {
-    }
+package Paciente {
+    entity "Paciente" as PacRoot <root> {
+    } 
 
-class "id" as ID7 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "id" as ID1 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "nome" as Nome1 <<(v,#FF7700) value object>>{}
+    class "sns" as SNS1 <<(v,#FF7700) value object>>{}
+
+    PacRoot --> ID1
+    PacRoot --> Nome1
+    PacRoot --> SNS1
 }
-    entity Imagem <root> {
+
+package Imagem{
+    entity "Imagem" as ImgRoot <root> {
     }
 
-    entity ConjuntoDeImagens <root> {
+    class "id" as ID2 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "data" as Data1 <<(v,#FF7700) value object>>{}
+    
+    ImgRoot --> ID2
+    ImgRoot --> Data1
+}
+    
+package Posição {
+    entity "Posição" as PosRoot <root> {
     }
 
-    entity Posição <root> {
+    class "id" as ID3 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "description" as Desc1 <<(v,#FF7700) value object>>{}
+
+    PosRoot --> Desc1
+    PosRoot --> ID3
+}
+
+package Médico {
+    entity "Médico" as MedRoot <root> {
     }
 
-    entity Médico <root> {
-    }
+    class "id" as ID4 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "nome" as Nome2 <<(v,#FF7700) value object>>{}
+    class "password" as Pass1 <<(v,#FF7700) value object>>{}
+
+    MedRoot --> Pass1    
+    MedRoot --> Nome2
+    MedRoot --> ID4
+}
 
 
+PacRoot "1" --> "n" ImgRoot
+ImgRoot "1" --> "1" PosRoot
+MedRoot "1" --> "n" PacRoot
 
 @enduml
