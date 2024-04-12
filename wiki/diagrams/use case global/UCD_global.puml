@@ -1,0 +1,25 @@
+@startuml
+
+left to right direction
+skinparam usecase {
+BackgroundColor LightBlue
+}
+
+actor Médico as med
+actor Paciente as pac
+actor Imagiologista as img
+
+med --> (Registar paciente)
+img --> (Registar paciente)
+med --> (Guardar imagens)
+img --> (Guardar imagens)
+med --> (Consultar imagens)
+med --> (Associar imagens a paciente)
+img --> (Associar imagens a paciente)
+med --> (Definir que médicos podem ver as imagens)
+img --> (Definir que médicos podem ver as imagens)
+pac --> (Disponiblização da identificação)
+med --> (Carregar modelo 3D)
+
+
+@enduml

@@ -32,7 +32,7 @@ package Posição {
     }
 
     class "id" as ID3 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "description" as Desc1 <<(v,#FF7700) value object>>{}
+    class "designation" as Desc1 <<(v,#FF7700) value object>>{}
 
     PosRoot --> Desc1
     PosRoot --> ID3
@@ -51,9 +51,32 @@ package Médico {
     MedRoot --> ID4
 }
 
+package Acesso_Medico_Imagem{
+    entity "Acesso_Medico_Imagem" as AcessoRoot <root> {
+    }
 
-PacRoot "1" --> "n" ImgRoot
-ImgRoot "1" --> "1" PosRoot
-MedRoot "1" --> "n" PacRoot
+    class "id" as ID6 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+
+    AcessoRoot --> ID6
+}
+
+package Imagiologista{
+    entity "Imagiologista" as ImglRoot <root> {
+    }
+
+    class "id" as ID5 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "nome" as Nome3 <<(v,#FF7700) value object>>{}
+    class "password" as Pass2 <<(v,#FF7700) value object>>{}
+
+    ImglRoot --> Pass2
+    ImglRoot --> Nome3
+    ImglRoot --> ID5
+}
+
+
+PacRoot "1" <-- "n" ImgRoot : "is from a"
+ImgRoot "1" --> "1" PosRoot : "has"
+AcessoRoot "1" --> "1" ImgRoot : "has"
+AcessoRoot "1" --> "1" MedRoot : "has"
 
 @enduml
