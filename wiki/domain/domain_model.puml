@@ -1,0 +1,26 @@
+@startuml
+
+hide methods
+
+
+package Pacientes {
+entity Paciente <root> {
+    }
+
+class "id" as ID7 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+}
+    entity Imagem <root> {
+    }
+
+    entity ConjuntoDeImagens <root> {
+    }
+
+    entity Posição <root> {
+    }
+
+    entity Médico <root> {
+    }
+
+
+
+@enduml
