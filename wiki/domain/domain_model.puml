@@ -32,7 +32,7 @@ package Posição {
     }
 
     class "id" as ID3 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "designation" as Desc1 <<(v,#FF7700) value object>>{}
+    class "designação" as Desc1 <<(v,#FF7700) value object>>{}
 
     PosRoot --> Desc1
     PosRoot --> ID3
@@ -44,10 +44,12 @@ package Médico {
 
     class "id" as ID4 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
     class "nome" as Nome2 <<(v,#FF7700) value object>>{}
+    class "email" as Email1 <<(v,#FF7700) value object>>{}
     class "password" as Pass1 <<(v,#FF7700) value object>>{}
 
     MedRoot --> Pass1    
     MedRoot --> Nome2
+    MedRoot --> Email1
     MedRoot --> ID4
 }
 
@@ -66,10 +68,12 @@ package Imagiologista{
 
     class "id" as ID5 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
     class "nome" as Nome3 <<(v,#FF7700) value object>>{}
+    class "email" as Email2 <<(v,#FF7700) value object>>{}
     class "password" as Pass2 <<(v,#FF7700) value object>>{}
 
     ImglRoot --> Pass2
     ImglRoot --> Nome3
+    ImglRoot --> Email2
     ImglRoot --> ID5
 }
 
