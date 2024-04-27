@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { celebrate, Joi } from 'celebrate';
 
 import { Container } from 'typedi';
-import IRoleController from '../../controllers/IControllers/IRoleController'; 
+import IRoleController from '../../controllers/IControllers/IRoleController';
 
 import config from "../../../config";
 
@@ -12,6 +12,8 @@ export default (app: Router) => {
   app.use('/roles', route);
 
   const ctrl = Container.get(config.controllers.role.name) as IRoleController;
+
+  route.get('', (req, res, next) => ctrl.listRoles(req, res, next) );
 
   route.post('',
     celebrate({

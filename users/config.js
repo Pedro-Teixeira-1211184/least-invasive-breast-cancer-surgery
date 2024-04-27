@@ -14,17 +14,22 @@ export default {
   /**
    * Your favorite port : optional change to 4000 by JRT
    */
-  port: parseInt(process.env.PORT, 10) || 3000, 
+  port: parseInt(process.env.PORT, 10) || 3000,
 
   /**
    * That long string from mlab
    */
-  databaseURL: process.env.MONGODB_URI || "mongodb://vsgate-s1.dei.isep.ipp.pt:11003",
-
+  databaseURL: process.env.MONGODB_URI || "mongodb://localhost:27017",
   /**
    * Your secret sauce
    */
   jwtSecret: process.env.JWT_SECRET || "my sakdfho2390asjod$%jl)!sdjas0i secret",
+
+  /**
+   * Database user and password
+   */
+  dbUser: process.env.DB_USER || "admin",
+  dbPassword: process.env.DB_PASS || "admin",
 
   /**
    * Used by winston logger

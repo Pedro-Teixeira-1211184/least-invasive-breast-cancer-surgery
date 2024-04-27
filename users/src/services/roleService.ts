@@ -41,6 +41,12 @@ export default class RoleService implements IRoleService {
 
       const roleResult = roleOrError.getValue();
 
+      const role_exists = await this.roleRepo.findByName(roleResult.name);
+
+      if (role_exists != null) {
+        return Result.fail<IRoleDTO>("Role already exists");
+      }
+
       await this.roleRepo.save(roleResult);
 
       const roleDTOResult = RoleMap.toDTO( roleResult ) as IRoleDTO;
@@ -65,6 +71,18 @@ export default class RoleService implements IRoleService {
         return Result.ok<IRoleDTO>( roleDTOResult )
         }
     } catch (e) {
+      throw e;
+    }
+  }
+
+  public async listRoles(): Promise<Result<Array<IRoleDTO>>> {
+    try {
+      const roles = await this.roleRepo.findAll();
+
+      const roleDTOs = roles.map( role => RoleMap.toDTO( role ) as IRoleDTO );
+
+      return Result.ok<Array<IRoleDTO>>( roleDTOs );
+    }catch (e) {
       throw e;
     }
   }

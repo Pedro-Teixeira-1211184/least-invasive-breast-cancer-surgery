@@ -16,10 +16,13 @@ export default class RoleController implements IRoleController /* TODO: extends 
 
   public async createRole(req: Request, res: Response, next: NextFunction) {
     try {
+
+      console.log("Creating role");
+
       const roleOrError = await this.roleServiceInstance.createRole(req.body as IRoleDTO) as Result<IRoleDTO>;
-        
+
       if (roleOrError.isFailure) {
-        return res.status(402).send();
+        return res.status(402).json(roleOrError.errorValue());
       }
 
       const roleDTO = roleOrError.getValue();
@@ -45,4 +48,18 @@ export default class RoleController implements IRoleController /* TODO: extends 
       return next(e);
     }
   };
+
+  public async listRoles(req: Request, res: Response, next: NextFunction) {
+    try {
+      console.log("Getting roles");
+      const roles = await this.roleServiceInstance.listRoles() as Result<Array<IRoleDTO>>;
+      if (roles.isFailure) {
+        return res.status(404).send();
+      }
+      return res.status(200).json(roles.getValue());
+    }
+    catch (e) {
+      return next(e);
+    }
+  }
 }
