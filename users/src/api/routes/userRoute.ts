@@ -1,18 +1,26 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import { Container } from 'typedi';
+import {Router, Request, Response, NextFunction} from 'express';
+import {Container} from 'typedi';
 
 import AuthService from '../../services/userService';
-import { IUserDTO } from '../../dto/IUserDTO';
+import {IUserDTO} from '../../dto/IUserDTO';
 
 import middlewares from '../middlewares';
-import { celebrate, Joi } from 'celebrate';
+import {celebrate, Joi} from 'celebrate';
 import winston = require('winston');
+import config from "../../../config";
+import IRoleController from "../../controllers/IControllers/IRoleController";
+import IUserControllerOnion from "../../controllers/IControllers/IUserControllerOnion";
 
 var user_controller = require('../../controllers/userController');
 
 const route = Router();
 
 export default (app: Router) => {
+
+  // AUTH PATH
+
+  const ctrl = Container.get(config.controllers.user.name) as IUserControllerOnion;
+
   app.use('/auth', route);
 
   route.post(
@@ -28,7 +36,8 @@ export default (app: Router) => {
     }),
     async (req: Request, res: Response, next: NextFunction) => {
       const logger = Container.get('logger') as winston.Logger;
-      logger.debug('Calling Sign-Up endpoint with body: %o', req.body )
+      logger.debug('Calling Sign-Up endpoint with body: %o', req.body)
+      console.log("Creating a User!");
 
       try {
         const authServiceInstance = Container.get(AuthService);
@@ -38,10 +47,10 @@ export default (app: Router) => {
           logger.debug(userOrError.errorValue())
           return res.status(401).send(userOrError.errorValue());
         }
-    
+
         const {userDTO, token} = userOrError.getValue();
 
-        return res.status(201).json({ userDTO, token });
+        return res.status(201).json({userDTO, token});
       } catch (e) {
         //logger.error('🔥 error: %o', e);
         return next(e);
@@ -61,18 +70,18 @@ export default (app: Router) => {
       const logger = Container.get('logger') as winston.Logger;
       logger.debug('Calling Sign-In endpoint with body: %o', req.body)
       try {
-        const { email, password } = req.body;
+        const {email, password} = req.body;
         const authServiceInstance = Container.get(AuthService);
         const result = await authServiceInstance.SignIn(email, password);
-        
-        if( result.isFailure )
+
+        if (result.isFailure)
           return res.json().status(403);
 
-        const { userDTO, token } = result.getValue();
-        return res.json({ userDTO, token }).status(200);
+        const {userDTO, token} = result.getValue();
+        return res.json({userDTO, token}).status(200);
 
       } catch (e) {
-        logger.error('🔥 error: %o',  e );
+        logger.error('🔥 error: %o', e);
         return next(e);
       }
     },
@@ -99,7 +108,36 @@ export default (app: Router) => {
     }
   });
 
+  route.post('/request', celebrate({
+      body: Joi.object({
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        email: Joi.string().required(),
+        password: Joi.string().required()
+      }),
+    }), async (req: Request, res: Response, next: NextFunction) => {
+      console.log("Creating a User Request!");
+      ctrl.signUpRequest(req, res, next);
+    }
+  );
+
+  route.get('/request', async (req: Request, res: Response, next: NextFunction) => {
+      console.log("Getting all User Requests!");
+      ctrl.getAllUserRequests(req, res, next);
+    }
+  );
+
+  route.delete('/request/:email', async (req: Request, res: Response, next: NextFunction) => {
+      console.log("Deleting a User Request!");
+      ctrl.deleteUserRequest(req, res, next);
+    }
+  );
+
+  // USERS PATH
+
   app.use('/users', route);
+
+  route.get('', (req: Request, res: Response, next: NextFunction) => ctrl.getAllUsers(req, res, next));
 
   route.get('/me', middlewares.isAuth, middlewares.attachCurrentUser, user_controller.getMe);
 };

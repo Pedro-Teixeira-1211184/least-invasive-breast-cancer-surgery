@@ -49,6 +49,10 @@ export default {
     role: {
       name: "RoleController",
       path: "../controllers/roleController"
+    },
+    user: {
+      name: "UserControllerOnion",
+      path: "../controllers/userControllerOnion"
     }
   },
 
@@ -60,6 +64,10 @@ export default {
     user: {
       name: "UserRepo",
       path: "../repos/userRepo"
+    },
+    signUpRequest: {
+      name: "SignUpRequestRepo",
+      path: "../repos/signUpRequestRepo"
     }
   },
 
@@ -67,6 +75,10 @@ export default {
     role: {
       name: "RoleService",
       path: "../services/roleService"
+    },
+    user: {
+      name: "UserServiceOnion",
+      path: "../services/userServiceOnion"
     }
   },
 };

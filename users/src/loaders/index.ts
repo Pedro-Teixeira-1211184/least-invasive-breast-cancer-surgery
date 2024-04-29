@@ -5,7 +5,7 @@ import Logger from './logger';
 
 import config from '../../config';
 
-export default async ({ expressApp }) => {
+export default async ({expressApp}) => {
   const mongoConnection = await mongooseLoader();
   Logger.info('✌️ DB loaded and connected!');
 
@@ -21,9 +21,20 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/roleSchema',
   };
 
+  const signUpRequestSchema = {
+    // compare with the approach followed in repos and services
+    name: 'signUpRequestSchema',
+    schema: '../persistence/schemas/signUpRequestSchema',
+  }
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
+  }
+
+  const userControllerOnion = {
+    name: config.controllers.user.name,
+    path: config.controllers.user.path
   }
 
   const roleRepo = {
@@ -36,30 +47,44 @@ export default async ({ expressApp }) => {
     path: config.repos.user.path
   }
 
+  const signUpRequestRepo = {
+    name: config.repos.signUpRequest.name,
+    path: config.repos.signUpRequest.path
+  }
+
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
+  }
+
+  const userServiceOnion = {
+    name: config.services.user.name,
+    path: config.services.user.path
   }
 
   await dependencyInjectorLoader({
     mongoConnection,
     schemas: [
       userSchema,
-      roleSchema
+      roleSchema,
+      signUpRequestSchema
     ],
     controllers: [
-      roleController
+      roleController,
+      userControllerOnion
     ],
     repos: [
       roleRepo,
-      userRepo
+      userRepo,
+      signUpRequestRepo
     ],
     services: [
-      roleService
+      roleService,
+      userServiceOnion
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
 
-  await expressLoader({ app: expressApp });
+  await expressLoader({app: expressApp});
   Logger.info('✌️ Express loaded');
 };
