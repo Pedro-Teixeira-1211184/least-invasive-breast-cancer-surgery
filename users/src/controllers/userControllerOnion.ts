@@ -33,6 +33,15 @@ export default class UserControllerOnion implements IUserControllerOnion /* TODO
   }
 
   public async getAllUserRequests(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userRequestsOrError = await this.userServiceInstance.getAllUserRequests() as Result<ISignUpRequestDTO[]>;
+      if (userRequestsOrError.isFailure) {
+        return res.status(403).json(userRequestsOrError.errorValue());
+      }
+      return res.status(200).json(userRequestsOrError.getValue());
+    } catch (e) {
+      return next(e);
+    }
   }
 
   public async signUpRequest(req: Request, res: Response, next: NextFunction) {

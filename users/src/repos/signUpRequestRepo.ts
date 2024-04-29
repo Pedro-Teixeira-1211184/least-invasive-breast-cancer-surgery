@@ -41,7 +41,11 @@ export default class SignUpRequestRepo implements ISignUpRequestRepo {
             //determines if the floor exists in the database by his number and buildingCode
             const query = {signUpRequestEmail: email};
             const floorDocument = await this.signUpRequestSchema.findOne(query as FilterQuery<ISignUpRequestPersistence & Document>);
-            return SignUpRequestMap.toDomain(floorDocument);
+            if (floorDocument != null) {
+                return await SignUpRequestMap.toDomain(floorDocument);
+            } else {
+                return null;
+            }
         } catch (error) {
             throw error;
         }

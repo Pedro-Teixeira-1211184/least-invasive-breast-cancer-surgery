@@ -43,26 +43,31 @@ export default class UserServiceOnion implements IUserServiceOnion {
   }
 
   public async getAllUserRequests(): Promise<Result<ISignUpRequestDTO[]>> {
-    return Promise.resolve(undefined);
+    try {
+      const requests = await this.requestRepo.getAll();
+      if (requests == null || requests.length == 0) {
+        return Result.fail<ISignUpRequestDTO[]>("No requests found");
+      }
+      const requestDTOs = requests.map(request => SignUpRequestMap.toDTO(request) as ISignUpRequestDTO);
+      return Result.ok<ISignUpRequestDTO[]>(requestDTOs);
+    } catch (e) {
+      throw e;
+    }
   }
 
   public async signUpRequest(userDTO: ISignUpRequestDTO): Promise<Result<ISignUpRequestDTO>> {
     try {
 
-      const userDocument = await this.userRepo.findByEmail( userDTO.email );
+      const userDocument = await this.userRepo.findByEmail(userDTO.email);
       const found = !!userDocument;
-
       if (found) {
         return Result.fail<ISignUpRequestDTO>("User already exists with email=" + userDTO.email);
       }
-
-      const userDocument2 = await this.requestRepo.findByEmail( userDTO.email );
+      const userDocument2 = await this.requestRepo.findByEmail(userDTO.email);
       const found2 = !!userDocument2;
-
       if (found2) {
         return Result.fail<ISignUpRequestDTO>("Request already exists with email=" + userDTO.email);
       }
-
       const requestOrError = await SignUpRequest.create(userDTO);
 
       if (requestOrError.isFailure) {
@@ -73,7 +78,7 @@ export default class UserServiceOnion implements IUserServiceOnion {
 
       const salt = randomBytes(32);
       this.logger.silly('Hashing password');
-      const hashedPassword = await argon2.hash(user.password, { salt });
+      const hashedPassword = await argon2.hash(user.password, {salt});
       this.logger.silly('Creating user db record');
 
       user.password = hashedPassword;
