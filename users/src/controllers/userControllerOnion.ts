@@ -30,6 +30,17 @@ export default class UserControllerOnion implements IUserControllerOnion /* TODO
   }
 
   public async deleteUserRequest(req: Request, res: Response, next: NextFunction) {
+    try {
+      const email = req.params.email;
+      const sucOrError = await this.userServiceInstance.deleteUserRequest(email);
+      if (sucOrError.isFailure) {
+        return res.status(403).json(sucOrError.errorValue());
+      }
+      const deleted = sucOrError.getValue();
+      return res.status(200).json({deleted, message: "Request deleted"});
+    } catch (e) {
+      return next(e);
+    }
   }
 
   public async getAllUserRequests(req: Request, res: Response, next: NextFunction) {

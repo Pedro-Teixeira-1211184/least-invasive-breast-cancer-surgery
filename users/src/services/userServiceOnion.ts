@@ -38,8 +38,24 @@ export default class UserServiceOnion implements IUserServiceOnion {
     }
   }
 
-  public async deleteUserRequest(email: string): Promise<Result<boolean>> {
-    return Promise.resolve(undefined);
+  public async deleteUserRequest(email: string): Promise<Result<ISignUpRequestDTO>> {
+    try {
+      const user = await this.requestRepo.findByEmail(email);
+
+      if (user == null) {
+        return Result.fail<ISignUpRequestDTO>("Request does not exist");
+      }
+
+      const dto = await this.requestRepo.delete(user);
+
+      if (dto == null) {
+        return Result.fail<ISignUpRequestDTO>("Request could not be deleted");
+      }
+
+      return Result.ok<ISignUpRequestDTO>(dto);
+    } catch (e) {
+      throw e;
+    }
   }
 
   public async getAllUserRequests(): Promise<Result<ISignUpRequestDTO[]>> {

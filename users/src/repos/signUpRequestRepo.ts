@@ -5,6 +5,7 @@ import {SignUpRequest} from "../domain/signUpRequest";
 import {SignUpRequestMap} from "../mappers/SignUpRequestMap";
 import {Document, FilterQuery, Model} from "mongoose";
 import {ISignUpRequestPersistence} from "../dataschema/ISignUpRequestPersistence";
+import {ISignUpRequestDTO} from "../dto/ISignUpRequestDTO";
 
 @Service()
 export default class SignUpRequestRepo implements ISignUpRequestRepo {
@@ -14,12 +15,12 @@ export default class SignUpRequestRepo implements ISignUpRequestRepo {
     ) {
     }
 
-    public async delete(signUpRequest: SignUpRequest): Promise<boolean> {
+    public async delete(signUpRequest: SignUpRequest): Promise<ISignUpRequestDTO> {
         try {
             this.signUpRequestSchema.deleteOne({signUpRequestEmail: signUpRequest.email}, (err) => {
-                if (err) return false;
+                if (err) return null;
             });
-            return true;
+            return SignUpRequestMap.toDTO(signUpRequest);
         } catch (e) {
             throw e;
         }

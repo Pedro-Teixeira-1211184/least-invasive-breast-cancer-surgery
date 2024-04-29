@@ -7,5 +7,5 @@ export default interface IUserServiceOnion  {
   getAllUsers(): Promise<Result<IUserDTO[]>>;
   signUpRequest(userDTO: ISignUpRequestDTO): Promise<Result<ISignUpRequestDTO>>;
   getAllUserRequests(): Promise<Result<ISignUpRequestDTO[]>>;
-  deleteUserRequest(email: string): Promise<Result<boolean>>;
+  deleteUserRequest(email: string): Promise<Result<ISignUpRequestDTO>>;
 }
