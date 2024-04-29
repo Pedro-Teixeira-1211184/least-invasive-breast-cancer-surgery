@@ -5,61 +5,48 @@ import Logger from './logger';
 
 import config from '../../config';
 
-export default async ({ expressApp }) => {
-  const mongoConnection = await mongooseLoader();
-  Logger.info('✌️ DB loaded and connected!');
+export default async ({expressApp}) => {
+    const mongoConnection = await mongooseLoader();
+    Logger.info('✌️ DB loaded and connected!');
 
-  const userSchema = {
-    // compare with the approach followed in repos and services
-    name: 'userSchema',
-    schema: '../persistence/schemas/userSchema',
-  };
+    const modelSchema = {
+        // compare with the approach followed in repos and services
+        name: 'modelSchema',
+        schema: '../persistence/schemas/modelSchema',
+    }
 
-  const roleSchema = {
-    // compare with the approach followed in repos and services
-    name: 'roleSchema',
-    schema: '../persistence/schemas/roleSchema',
-  };
+    const modelController = {
+        name: config.controllers.model.name,
+        path: config.controllers.model.path
+    }
 
-  const roleController = {
-    name: config.controllers.role.name,
-    path: config.controllers.role.path
-  }
+    const modelRepo = {
+        name: config.repos.model.name,
+        path: config.repos.model.path
+    }
 
-  const roleRepo = {
-    name: config.repos.role.name,
-    path: config.repos.role.path
-  }
+    const modelService = {
+        name: config.services.model.name,
+        path: config.services.model.path
+    }
 
-  const userRepo = {
-    name: config.repos.user.name,
-    path: config.repos.user.path
-  }
+    await dependencyInjectorLoader({
+        mongoConnection,
+        schemas: [
+            modelSchema
+        ],
+        controllers: [
+            modelController
+        ],
+        repos: [
+            modelRepo
+        ],
+        services: [
+            modelService
+        ]
+    });
+    Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
 
-  const roleService = {
-    name: config.services.role.name,
-    path: config.services.role.path
-  }
-
-  await dependencyInjectorLoader({
-    mongoConnection,
-    schemas: [
-      userSchema,
-      roleSchema
-    ],
-    controllers: [
-      roleController
-    ],
-    repos: [
-      roleRepo,
-      userRepo
-    ],
-    services: [
-      roleService
-    ]
-  });
-  Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
-
-  await expressLoader({ app: expressApp });
-  Logger.info('✌️ Express loaded');
+    await expressLoader({app: expressApp});
+    Logger.info('✌️ Express loaded');
 };
