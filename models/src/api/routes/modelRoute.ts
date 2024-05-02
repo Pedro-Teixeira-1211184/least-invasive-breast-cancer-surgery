@@ -17,16 +17,8 @@ export default (app: Router) => {
   const upload = multer({dest: 'uploads/'}); // Configuração do multer para lidar com arquivos multipartes
 
   // Route for uploading a single .obj file
-  route.post('/upload', upload.single('objFile'), async (req, res) => {
+  route.post('/', upload.single('objFile'), (req, res) => {
     try {
-      // Check if req.file is defined
-      if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' });
-      }
-
-      // File details
-      console.log('Uploaded file:', req.file);
-
       // Handle file processing/storage here
       res.status(200).json({ message: 'File uploaded successfully' });
     } catch (error) {
@@ -34,10 +26,6 @@ export default (app: Router) => {
       res.status(500).json({ error: 'Failed to upload file' });
     }
   });
-
-
-  // upload a obj file
-  route.post('', (req, res, next) => ctrl.uploadModel(req, res, next));
 
   // download model by its id
   route.get('/:id',
