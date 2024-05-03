@@ -14,17 +14,24 @@ export default (app: Router) => {
 
   const ctrl = Container.get(config.controllers.model.name) as IModelController;
 
-  const upload = multer({dest: 'uploads/'}); // Configuração do multer para lidar com arquivos multipartes
+  const path = require('path');
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'Files');
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    }
+  });
+
+  const upload = multer({storage: storage});
 
   // Route for uploading a single .obj file
-  route.post('/', upload.single('objFile'), (req, res) => {
-    try {
-      // Handle file processing/storage here
-      res.status(200).json({ message: 'File uploaded successfully' });
-    } catch (error) {
-      console.error('Failed to upload .obj file', error);
-      res.status(500).json({ error: 'Failed to upload file' });
-    }
+  route.post('/', upload.single('file'), (req, res) => {
+    // Handle file processing/storage here
+    // @ts-ignore
+    console.log(req.file);
+    res.status(200).json({message: 'File uploaded successfully'});
   });
 
   // download model by its id
