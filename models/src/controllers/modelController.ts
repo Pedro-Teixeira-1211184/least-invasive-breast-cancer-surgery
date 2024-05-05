@@ -1,6 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
 import {ParamsDictionary} from 'express-serve-static-core';
-import {ParsedQs} from 'qs';
 import {Inject, Service} from 'typedi';
 import config from "../../config";
 
