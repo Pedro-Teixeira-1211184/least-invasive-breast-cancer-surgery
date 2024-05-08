@@ -56,4 +56,13 @@ export default (app: Router) => {
             })
         }),
         (req, res, next) => ctrl.getModelByPatientId(req, res, next));
+
+    // delete model by id
+    route.delete('/:id',
+        celebrate({
+            params: Joi.object({
+                id: Joi.string().required()
+            })
+        }),
+        (req, res, next) => ctrl.deleteModel(req, res, next));
 };

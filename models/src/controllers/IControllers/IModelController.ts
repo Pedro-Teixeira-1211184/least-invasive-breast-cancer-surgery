@@ -8,4 +8,6 @@ export default interface IModelController {
     getAllModels(req: Request, res: Response, next: NextFunction);
 
     getModelByPatientId(req: Request, res: Response, next: NextFunction);
+
+    deleteModel(req: Request, res: Response, next: NextFunction);
 }

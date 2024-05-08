@@ -17,6 +17,33 @@ export default class ModelController implements IModelController /* TODO: extend
     ) {
     }
 
+    public async deleteModel(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {
+        try {
+            console.log('Deleting model...');
+            const id = req.params.id;
+
+            const result = await this.modelServiceInstance.deleteModel(id);
+
+            if (result.isFailure) {
+                return res.status(404).json(result.errorValue());
+            }
+
+            //delete model file by its path
+            const path = result.getValue().path;
+            const fs = require('fs');
+            fs.unlink(path, (err: any) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+            });
+
+            return res.status(200).json(result.getValue() + ' deleted');
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async getModelByPatientId(req: Request, res: Response, next: NextFunction) {
         try {
             console.log('Getting model by patient id...');

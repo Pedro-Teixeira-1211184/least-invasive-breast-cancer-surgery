@@ -14,6 +14,18 @@ export default class ModelService implements IModelService {
     ) {
     }
 
+    public async deleteModel(modelId: string): Promise<Result<IModelDTO>> {
+        try {
+            const model = await this.modelRepo.delete(modelId);
+            if (model == null) {
+                return Result.fail<IModelDTO>("Model not found");
+            }
+            return Result.ok<IModelDTO>(ModelMap.toDTO(model));
+        } catch (e) {
+            return Result.fail<IModelDTO>(e);
+        }
+    }
+
     public async findByPatientId(patientId: string): Promise<Result<IModelDTO[]>> {
         try {
             const models = await this.modelRepo.findByPatientId(patientId);

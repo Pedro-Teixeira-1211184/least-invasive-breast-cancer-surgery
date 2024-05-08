@@ -10,4 +10,6 @@ export default interface IModelService {
     findByPatientId(patientId: string): Promise<Result<IModelDTO[]>>;
 
     getAllModels(): Promise<Result<IModelDTO[]>>;
+
+    deleteModel(modelId: string): Promise<Result<IModelDTO>>;
 }

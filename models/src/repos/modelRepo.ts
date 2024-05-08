@@ -16,6 +16,19 @@ export default class ModelRepo implements IModelRepo {
     ) {
     }
 
+    public async delete(modelId: string): Promise<ObjModel> {
+        try {
+            const query = {domainId: modelId};
+            const modelDocument = await this.modelSchema.findOneAndDelete(query as FilterQuery<IModelPersistence & Document>);
+            if (modelDocument == null) {
+                return null;
+            }
+            return ModelMap.toDomain(modelDocument);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public async findById(modelId: string): Promise<ObjModel> {
         try {
             const query = {domainId: modelId};

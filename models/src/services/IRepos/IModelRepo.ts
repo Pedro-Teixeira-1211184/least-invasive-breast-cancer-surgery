@@ -7,4 +7,5 @@ export default interface IModelRepo extends Repo<ObjModel> {
     findByPatientId(patientId: string): Promise<ObjModel[]>;
     findAll(): Promise<ObjModel[]>;
     findById(modelId: string): Promise<ObjModel>;
+    delete(modelId: string): Promise<ObjModel>;
 }
