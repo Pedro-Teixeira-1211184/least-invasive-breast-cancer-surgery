@@ -38,7 +38,7 @@ export default class ModelController implements IModelController /* TODO: extend
                 }
             });
 
-            return res.status(200).json(result.getValue() + ' deleted');
+            return res.status(200).json(result.getValue().id + ' deleted');
         } catch (e) {
             next(e);
         }
