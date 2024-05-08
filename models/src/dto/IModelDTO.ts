@@ -1,6 +1,6 @@
 export default interface IModelDTO {
     id: string;
     patientId: string;
-    modelId: string;
+    path: string;
     description: string;
 }

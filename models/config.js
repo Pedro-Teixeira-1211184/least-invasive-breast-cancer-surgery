@@ -22,6 +22,12 @@ export default {
     databaseURL: process.env.MONGODB_URI || "mongodb://vsgate-s1.dei.isep.ipp.pt:10564",
 
     /**
+     * Database user and password
+     */
+    dbUser: process.env.DB_USER || "mongoadmin",
+    dbPassword: process.env.DB_PASS || "1fba0fe53cb35cbecd2c2c56",
+
+    /**
      * Your secret sauce
      */
     jwtSecret: process.env.JWT_SECRET || "my sakdfho2390asjod$%jl)!sdjas0i secret",

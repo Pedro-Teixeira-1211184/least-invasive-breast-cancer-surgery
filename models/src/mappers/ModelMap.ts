@@ -12,7 +12,7 @@ export class ModelMap extends Mapper<ObjModel> {
         return {
             id: model.id.toString(),
             patientId: model.patientId,
-            modelId: model.modelId,
+            path: model.path,
             description: model.description,
         } as IModelDTO;
     }
@@ -32,8 +32,8 @@ export class ModelMap extends Mapper<ObjModel> {
         return {
             domainId: model.id.toString(),
             patientId: model.patientId,
-            modelId: model.modelId,
             description: model.description,
+            path: model.path,
         }
     }
 }

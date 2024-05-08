@@ -1,6 +1,6 @@
 export interface IModelPersistence {
     domainId: string;
     patientId: string;
-    modelId: string;
+    path: string;
     description: string;
 }

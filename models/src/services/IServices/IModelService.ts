@@ -1,7 +1,13 @@
 import {NextFunction, Request, Response} from "express";
+import IModelDTO from "../../dto/IModelDTO";
+import {Result} from "../../core/logic/Result";
 
 export default interface IModelService {
-    uploadModel(req: Request, res: Response, next: NextFunction);
+    uploadModel(modelDTO: IModelDTO): Promise<Result<IModelDTO>>;
 
-    downloadModel(req: Request, res: Response, next: NextFunction);
+    findById(modelId: string): Promise<Result<IModelDTO>>;
+
+    findByPatientId(patientId: string): Promise<Result<IModelDTO[]>>;
+
+    getAllModels(): Promise<Result<IModelDTO[]>>;
 }

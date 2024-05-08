@@ -5,8 +5,8 @@ const ModelSchema = new mongoose.Schema(
     {
         domainId: {type: String, unique: true},
         patientId: {type: String},
-        modelId: {type: String},
         description: {type: String},
+        path: {type: String, unique: true},
     },
     {
         timestamps: true

@@ -7,7 +7,7 @@ import IModelDTO from "../dto/IModelDTO";
 interface ModelProps {
 
     patientId: string;
-    modelId: string;
+    path: string;
     description: string;
 }
 
@@ -21,12 +21,12 @@ export class ObjModel extends AggregateRoot<ModelProps> {
         return new ObjModelId(this.objModelId.toValue());
     }
 
-    get modelId(): string {
-        return this.props.modelId;
-    }
-
     get patientId(): string {
         return this.props.patientId;
+    }
+
+    get path(): string {
+        return this.props.path;
     }
 
     get description(): string {
@@ -39,17 +39,19 @@ export class ObjModel extends AggregateRoot<ModelProps> {
 
     public static create(modelDTO: IModelDTO, id?: UniqueEntityID): Result<ObjModel> {
         const patientId = modelDTO.patientId;
-        const modelId = modelDTO.modelId;
+        const path = modelDTO.path;
         const description = modelDTO.description;
 
         if (!!patientId === false || patientId.length === 0) {
             return Result.fail<ObjModel>('Must provide a patient id')
-        } else if (!!modelId === false || modelId.length === 0) {
-            return Result.fail<ObjModel>('Must provide a model id')
         } else if (!!description === false || description.length === 0) {
             return Result.fail<ObjModel>('Must provide a description')
         } else {
-            const model = new ObjModel({patientId: patientId, modelId: modelId, description: description}, id);
+            const model = new ObjModel({
+                patientId: patientId,
+                path: path,
+                description: description
+            }, id);
             return Result.ok<ObjModel>(model)
         }
     }

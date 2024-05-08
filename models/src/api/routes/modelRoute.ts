@@ -20,17 +20,20 @@ export default (app: Router) => {
             cb(null, 'uploads');
         },
         filename: (req, file, cb) => {
-            cb(null, file.originalname);
+            cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
         }
     });
 
     const upload = multer({storage: storage});
 
     // Route for uploading a single .obj file
-    route.post('/', upload.single('file'), (req, res, next) => {
-        // Handle file processing/storage here
-      ctrl.uploadModel(req, res, next);
-    });
+    route.post('/', upload.single('file'),celebrate ({
+        body: Joi.object({
+            patientId: Joi.string().required(),
+            description: Joi.string().required()
+        }),
+    }),
+        (req, res, next) => ctrl.uploadModel(req, res, next));
 
     // download model by its id
     route.get('/:id',
@@ -40,4 +43,17 @@ export default (app: Router) => {
             })
         }),
         (req, res, next) => ctrl.downloadModel(req, res, next));
+
+
+    // get all models
+    route.get('/', (req, res, next) => ctrl.getAllModels(req, res, next));
+
+    // get model by patient id
+    route.get('/patient/:id',
+        celebrate({
+            params: Joi.object({
+                id: Joi.string().required()
+            })
+        }),
+        (req, res, next) => ctrl.getModelByPatientId(req, res, next));
 };

@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 const itemsRouter = require("./routes/items");
-app.use("/api/v1/items", itemsRouter);
+app.use("/api/items", itemsRouter);
 
 const start = async () => {
   try {
