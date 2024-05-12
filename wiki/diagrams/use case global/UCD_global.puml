@@ -1,6 +1,6 @@
 @startuml
 
-left to right direction
+top to bottom direction
 skinparam usecase {
 BackgroundColor LightBlue
 }
@@ -8,11 +8,17 @@ BackgroundColor LightBlue
 actor Médico as med
 actor Paciente as pac
 actor Imagiologista as img
+actor Administrador as adm
 
+adm --> (obter pedidos de registo)
+adm --> (aceitar/negar pedidos de registo)
+adm --> (obter todos os utilizadores)
+med --> (pedir registo na plataforma)
+img --> (pedir registo na plataforma)
 med --> (Registar paciente)
 img --> (Registar paciente)
-med --> (Guardar imagens)
-img --> (Guardar imagens)
+med --> (Guardar imagens de textura)
+img --> (Guardar imagens de textura)
 med --> (Consultar imagens)
 med --> (Associar imagens a paciente)
 img --> (Associar imagens a paciente)
@@ -20,6 +26,9 @@ med --> (Definir que médicos podem ver as imagens)
 img --> (Definir que médicos podem ver as imagens)
 pac --> (Disponiblização da identificação)
 med --> (Carregar modelo 3D)
+med --> (Descarregar modelo 3D)
+med --> (Obter modelos 3D por paciente)
+med --> (eliminar modelo 3D)
 
 
 @enduml
