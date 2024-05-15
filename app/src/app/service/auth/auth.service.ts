@@ -34,15 +34,46 @@ export class AuthService {
         localStorage.setItem('email', data.userDTO.email);
         localStorage.setItem('firstName', data.userDTO.firstName);
         localStorage.setItem('lastName', data.userDTO.lastName);
-        localStorage.setItem('sns', data.userDTO.sns);
         window.location.href = '/home';
       } else {
-        alert('Invalid credentials');
-        window.location.href = '/';
+        const response = await fetch(Constants.API_AUTH_LOGIN_URL_PATIENT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password
+          })
+        });
+
+        if (response.status === 200) {
+          const data = await response.json();
+          //redirect to home page of a certain user role
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.userDTO.role);
+          localStorage.setItem('email', data.userDTO.email);
+          localStorage.setItem('firstName', data.userDTO.firstName);
+          localStorage.setItem('lastName', data.userDTO.lastName);
+          localStorage.setItem('sns', data.userDTO.sns);
+          window.location.href = '/home';
+        } else {
+          alert('Invalid credentials');
+          window.location.href = '/';
+        }
       }
     } catch (e) {
       console.log(e);
     }
+  }
+
+  public async logout(): Promise<void> {
+    this.clearLocalStorage();
+    window.location.href = '/login';
+  }
+
+  public async isAuthenticated(): Promise<boolean> {
+    return localStorage.getItem('token') !== null;
   }
 
   clearLocalStorage(): void {

@@ -1,6 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgIf} from "@angular/common";
+import {AuthService} from "../service/auth/auth.service";
+import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
 
 @Component({
   selector: 'app-login',
@@ -18,9 +20,15 @@ export class LoginComponent {
   constructor() {
   }
 
+  auth: AuthService = inject(AuthService);
   loginForm!: FormGroup;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
+    if (await this.auth.isAuthenticated()) {
+      window.location.href = '/home';
+    }
+
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -41,7 +49,7 @@ export class LoginComponent {
         alert('Please fill all the fields');
         return;
       }
-      console.log(this.email?.value, this.password?.value);
+      await this.auth.login(this.email?.value, this.password?.value);
     } catch (e) {
       console.log(e);
     }
