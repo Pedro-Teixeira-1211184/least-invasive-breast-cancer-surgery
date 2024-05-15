@@ -27,6 +27,12 @@ export default async ({expressApp}) => {
         schema: '../persistence/schemas/signUpRequestSchema',
     }
 
+    const signUpRequestPatientSchema = {
+        // compare with the approach followed in repos and services
+        name: 'signUpRequestPatientSchema',
+        schema: '../persistence/schemas/signUpRequestPatientSchema',
+    }
+
     const patientSchema = {
         // compare with the approach followed in repos and services
         name: 'patientSchema',
@@ -74,7 +80,8 @@ export default async ({expressApp}) => {
             userSchema,
             roleSchema,
             signUpRequestSchema,
-            patientSchema
+            patientSchema,
+            signUpRequestPatientSchema
         ],
         controllers: [
             roleController,

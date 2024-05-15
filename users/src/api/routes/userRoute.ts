@@ -188,9 +188,29 @@ export default (app: Router) => {
         }
     );
 
+    route.post('/request/patient', celebrate({
+            body: Joi.object({
+                firstName: Joi.string().required(),
+                lastName: Joi.string().required(),
+                email: Joi.string().required(),
+                password: Joi.string().required(),
+                sns: Joi.number().min(100000000).max(999999999).required(),
+            }),
+        }), async (req: Request, res: Response, next: NextFunction) => {
+            console.log("Creating a Patient Request!");
+            ctrl.signUpPatientRequest(req, res, next);
+        }
+    );
+
     route.get('/request', async (req: Request, res: Response, next: NextFunction) => {
             console.log("Getting all User Requests!");
             ctrl.getAllUserRequests(req, res, next);
+        }
+    );
+
+    route.get('/request/patient', async (req: Request, res: Response, next: NextFunction) => {
+            console.log("Getting all Patient Requests!");
+            ctrl.getAllPatientRequests(req, res, next);
         }
     );
 
@@ -199,6 +219,18 @@ export default (app: Router) => {
             ctrl.deleteUserRequest(req, res, next);
         }
     );
+
+    route.delete('/request/patient/:email', async (req: Request, res: Response, next: NextFunction) => {
+            console.log("Deleting a Patient Request!");
+            ctrl.deletePatientRequest(req, res, next);
+        }
+    );
+
+    // PATIENTS PATH
+
+    app.use('/patients', route);
+
+    route.get('', (req: Request, res: Response, next: NextFunction) => ctrl.getAllPatients(req, res, next));
 
     // USERS PATH
 

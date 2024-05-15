@@ -23,6 +23,15 @@ export default class UserRepo implements IUserRepo {
     ) {
     }
 
+    public async findAllPatients(): Promise<Patient[]> {
+        const userRecords = await this.patientSchema.find();
+        let users: Patient[] = [];
+        for (let userRecord of userRecords) {
+            users.push(await PatientMap.toDomain(userRecord));
+        }
+        return users;
+    }
+
     public async savePatient(patient: Patient): Promise<Patient> {
         const query = {domainId: patient.id.toString()};
 

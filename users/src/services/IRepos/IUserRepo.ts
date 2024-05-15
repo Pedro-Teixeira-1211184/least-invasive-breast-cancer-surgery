@@ -10,4 +10,5 @@ export default interface IUserRepo extends Repo<User> {
 	findPatientByEmail (email: UserEmail | string): Promise<Patient>;
 	findById (id: string): Promise<User>;
   findAll(): Promise<User[]>;
+  findAllPatients(): Promise<Patient[]>;
 }
