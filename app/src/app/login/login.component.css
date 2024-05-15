@@ -90,3 +90,14 @@ input {
   color: red;
   font-size: 12px;
 }
+
+.signup-link {
+  color: #6B7280;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: center;
+}
+
+.signup-link a {
+  text-decoration: underline;
+}

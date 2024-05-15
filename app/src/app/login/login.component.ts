@@ -3,6 +3,7 @@ import {FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Valida
 import {NgIf} from "@angular/common";
 import {AuthService} from "../service/auth/auth.service";
 import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagno
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'

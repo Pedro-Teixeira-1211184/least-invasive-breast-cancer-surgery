@@ -17,5 +17,9 @@
     </div>
     <button type="submit" class="btn" [disabled]="loginForm.invalid" (click)="submit()">Login</button>
     <button type="button" class="btn" (click)="clearForm()">Clear</button>
+    <p class="signup-link">
+      No account?
+      <a routerLink="/signup">Sign up</a>
+    </p>
   </form>
 </div>
