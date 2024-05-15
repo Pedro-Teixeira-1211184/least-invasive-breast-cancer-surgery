@@ -23,16 +23,21 @@ export class LoginComponent {
   auth: AuthService = inject(AuthService);
   loginForm!: FormGroup;
 
-  async ngOnInit(): Promise<void> {
-
-    if (await this.auth.isAuthenticated()) {
-      window.location.href = '/home';
-    }
-
+  ngOnInit(): void {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
+
+    this.isUserLoggedIn().then((res) => {
+      if (res) {
+        window.location.href = '/home';
+      }
+    });
+  }
+
+  async isUserLoggedIn() {
+    return await this.auth.isAuthenticated();
   }
 
   get email() {

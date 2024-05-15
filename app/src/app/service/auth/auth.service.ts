@@ -73,7 +73,11 @@ export class AuthService {
   }
 
   public async isAuthenticated(): Promise<boolean> {
-    return localStorage.getItem('token') !== null;
+    try {
+      return localStorage.getItem('token') !== null;
+    } catch (e) {
+      return false;
+    }
   }
 
   clearLocalStorage(): void {
