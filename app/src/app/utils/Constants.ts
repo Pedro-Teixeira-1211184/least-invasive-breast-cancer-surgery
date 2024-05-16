@@ -13,4 +13,10 @@ export default class Constants {
   public static readonly API_AUTH_SIGNUP_URL = Constants.API_BASE_URL_USERS + 'api/auth/request';
   public static readonly API_AUTH_SIGNUP_URL_PATIENT = Constants.API_BASE_URL_USERS + 'api/auth/request/patient';
 
+  // roles
+  public static readonly ROLE_ADMIN = 'admin';
+  public static readonly ROLE_DOCTOR = 'doctor';
+  public static readonly ROLE_PATIENT = 'patient';
+  public static readonly ROLE_IMAGIOLOGIST = 'imagiologist';
+  public static readonly API_GET_ROLES = Constants.API_BASE_URL_USERS + 'api/roles';
 }

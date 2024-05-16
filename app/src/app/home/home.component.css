@@ -1,0 +1,55 @@
+/* Contêiner principal para layout flexível */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Estilos do cabeçalho */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333; /* Cinzento escuro */
+  color: white; /* Texto em branco */
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Links de navegação */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  margin: 0 auto; /* Centralizar os links */
+  cursor: pointer;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #4cc9f0; /* Azul claro ao passar o mouse */
+}
+
+.logout {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.logout:hover {
+  color: #ff4d4d; /* Vermelho claro ao passar o mouse */
+  cursor: pointer;
+}
+
+/* Conteúdo principal */
+#content {
+  flex-grow: 1;
+  background-color: lightgray;
+  height: 100%;
+}

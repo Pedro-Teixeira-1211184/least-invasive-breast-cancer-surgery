@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../utils/Constants";
-import {IUserDTO} from "../../dto/IUserDTO";
+import IRoleDTO from "../../dto/IRoleDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -133,13 +133,28 @@ export class AuthService {
     }
   }
 
+  public async getAllRoles(): Promise<IRoleDTO[]> {
+    try {
+      const response = await fetch(Constants.API_GET_ROLES, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  }
+
   clearLocalStorage(): void {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
     localStorage.removeItem('email')
     localStorage.removeItem('firstName')
     localStorage.removeItem('lastName')
-    localStorage.removeItem('nif')
+    localStorage.removeItem('sns')
   }
 
 }

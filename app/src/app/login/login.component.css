@@ -92,6 +92,7 @@ input {
 }
 
 .signup-link {
+  padding-top: 10px;
   color: #6B7280;
   font-size: 0.875rem;
   line-height: 1.25rem;
