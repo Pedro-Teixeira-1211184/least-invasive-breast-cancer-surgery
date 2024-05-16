@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgIf} from "@angular/common";
 import {AuthService} from "../service/auth/auth.service";
@@ -17,7 +17,7 @@ import {RouterLink} from "@angular/router";
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   constructor() {
   }

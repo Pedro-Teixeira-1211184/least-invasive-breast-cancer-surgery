@@ -19,18 +19,17 @@ export default {
     /**
      * That long string from mlab
      */
-    databaseURL: process.env.MONGODB_URI || "mongodb://vsgate-s1.dei.isep.ipp.pt:10564",
+    databaseURL: process.env.MONGODB_URI || "mongodb://vsgate-s1.dei.isep.ipp.pt:11003",
+    /**
+     * Your secret sauce
+     */
+    jwtSecret: process.env.JWT_SECRET || "my sakdfho2390asjod$%jl)!sdjas0i secret",
 
     /**
      * Database user and password
      */
     dbUser: process.env.DB_USER || "mongoadmin",
-    dbPassword: process.env.DB_PASS || "1fba0fe53cb35cbecd2c2c56",
-
-    /**
-     * Your secret sauce
-     */
-    jwtSecret: process.env.JWT_SECRET || "my sakdfho2390asjod$%jl)!sdjas0i secret",
+    dbPassword: process.env.DB_PASS || "4078746d57ce9cb03b58d503",
 
     /**
      * Used by winston logger
@@ -47,20 +46,32 @@ export default {
     },
 
     controllers: {
+        user: {
+            name: "UserControllerOnion",
+            path: "../controllers/userControllerOnion"
+        },
         model: {
             name: "ModelController",
             path: "../controllers/modelController"
-        },
+        }
     },
 
     repos: {
+        user: {
+            name: "UserRepo",
+            path: "../repos/userRepo"
+        },
         model: {
             name: "ModelRepo",
             path: "../repos/modelRepo"
-        },
+        }
     },
 
     services: {
+        user: {
+            name: "UserServiceOnion",
+            path: "../services/userServiceOnion"
+        },
         model: {
             name: "ModelService",
             path: "../services/modelService"

@@ -8,17 +8,21 @@
         <div class="flip-card__inner">
           <div class="flip-card__front">
             <div class="title">Sign Up</div>
-            <form class="flip-card__form" action="">
-              <input class="flip-card__input" name="firstName" placeholder="First name" type="text">
-              <input class="flip-card__input" name="lastName" placeholder="Last name" type="text">
-              <input class="flip-card__input" name="email" placeholder="Email" type="email">
-              <input class="flip-card__input" name="password" placeholder="Password" type="password">
-              <button class="flip-card__btn">Let`s go!</button>
+            <form class="flip-card__form" [formGroup]="loginForm">
+              <input class="flip-card__input" name="firstName" placeholder="First name" type="text" formControlName="firstName">
+              <input class="flip-card__input" name="lastName" placeholder="Last name" type="text" formControlName="lastName">
+              <input class="flip-card__input" name="email" placeholder="Email" type="email" formControlName="email">
+              <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="error">
+                <div *ngIf="email?.errors?.['required']">Email is required.</div>
+                <div *ngIf="email?.errors?.['email']">Please enter a valid email address.</div>
+              </div>
+              <input class="flip-card__input" name="password" placeholder="Password" type="password" formControlName="password">
+              <button class="flip-card__btn" [disabled]="loginForm.invalid" (click)="submit()">Let`s go!</button>
             </form>
           </div>
           <div class="flip-card__back">
             <div class="title">Sign Up</div>
-            <form class="flip-card__form" action="">
+            <form class="flip-card__form" [formGroup]="loginForm2">
               <input class="flip-card__input" name="firstName" placeholder="First name" type="text">
               <input class="flip-card__input" name="lastName" placeholder="Last name" type="text">
               <input class="flip-card__input" name="sns" placeholder="Healthcare number" type="number">

@@ -8,12 +8,14 @@ import IModelController from "./IControllers/IModelController";
 import IModelService from "../services/IServices/IModelService";
 import IModelDTO from "../dto/IModelDTO";
 import {ParsedQs} from 'qs';
+import IUserServiceOnion from "../services/IServices/IUserServiceOnion";
 
 
 @Service()
 export default class ModelController implements IModelController /* TODO: extends ../core/infra/BaseController */ {
     constructor(
-        @Inject(config.services.model.name) private modelServiceInstance: IModelService
+        @Inject(config.services.model.name) private modelServiceInstance: IModelService,
+        @Inject(config.services.user.name) private userServiceInstance: IUserServiceOnion
     ) {
     }
 
@@ -83,6 +85,12 @@ export default class ModelController implements IModelController /* TODO: extend
             const {patientId, description} = req.body;
             // @ts-ignore
             const path = req.file.path;
+
+            //check if patient exists
+            const patient = await this.userServiceInstance.findPatientByPatientId(patientId);
+            if (patient.isFailure) {
+                return res.status(404).json(patient.errorValue());
+            }
 
             const modelDTO = {
                 patientId,

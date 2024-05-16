@@ -15,6 +15,11 @@ export default async ({expressApp}) => {
         schema: '../persistence/schemas/modelSchema',
     }
 
+    const patientSchema = {
+        name: 'patientSchema',
+        schema: '../persistence/schemas/patientSchema',
+    }
+
     const modelController = {
         name: config.controllers.model.name,
         path: config.controllers.model.path
@@ -25,24 +30,37 @@ export default async ({expressApp}) => {
         path: config.repos.model.path
     }
 
+    const userRepo = {
+        name: config.repos.user.name,
+        path: config.repos.user.path
+    }
+
     const modelService = {
         name: config.services.model.name,
         path: config.services.model.path
     }
 
+    const userService = {
+        name: config.services.user.name,
+        path: config.services.user.path
+    }
+
     await dependencyInjectorLoader({
         mongoConnection,
         schemas: [
-            modelSchema
+            modelSchema,
+            patientSchema
         ],
         controllers: [
             modelController
         ],
         repos: [
-            modelRepo
+            modelRepo,
+            userRepo
         ],
         services: [
-            modelService
+            modelService,
+            userService
         ]
     });
     Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
