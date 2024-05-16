@@ -80,6 +80,59 @@ export class AuthService {
     }
   }
 
+  public async signUpRequestUser(firstName: string, lastName: string, email: string, password: string): Promise<void> {
+    try {
+      const response = await fetch(Constants.API_AUTH_SIGNUP_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password
+        })
+      });
+
+      if (response.status === 201) {
+        alert('Request sent');
+        window.location.href = '/';
+      } else {
+        alert('Error creating request');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async signUpRequestPatient(firstName2: string, lastName2: string, sns: string, email2: string, password2: string): Promise<void> {
+    try {
+      const response = await fetch(Constants.API_AUTH_SIGNUP_URL_PATIENT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName: firstName2,
+          lastName: lastName2,
+          email: email2,
+          password: password2,
+          sns: sns
+        })
+      });
+
+      if (response.status === 201) {
+        alert('Request sent');
+        window.location.href = '/';
+      } else {
+        alert('Error creating request');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   clearLocalStorage(): void {
     localStorage.removeItem('token')
     localStorage.removeItem('role')

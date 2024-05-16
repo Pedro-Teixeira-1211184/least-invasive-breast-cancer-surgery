@@ -80,6 +80,16 @@ export default class UserServiceOnion implements IUserServiceOnion {
             if (found3) {
                 return Result.fail<ISignUpRequestPatientDTO>("User already exists with email=" + userDTO.email);
             }
+            const userDocument4 = await this.requestRepo.findByPatientSns(userDTO.sns);
+            const found4 = !!userDocument4;
+            if (found4) {
+                return Result.fail<ISignUpRequestPatientDTO>("Patient request already exists with sns=" + userDTO.sns);
+            }
+            const userDocument5 = await this.userRepo.findBySns(userDTO.sns);
+            const found5 = !!userDocument5;
+            if (found5) {
+                return Result.fail<ISignUpRequestPatientDTO>("Patient already exists with sns=" + userDTO.sns);
+            }
 
             const requestOrError = await SignUpRequestPatient.create(userDTO);
 
@@ -184,6 +194,11 @@ export default class UserServiceOnion implements IUserServiceOnion {
             const found3 = !!userDocument3;
             if (found3) {
                 return Result.fail<ISignUpRequestDTO>("Patient already exists with email=" + userDTO.email);
+            }
+            const userDocument4 = await this.requestRepo.findPatientByEmail(userDTO.email);
+            const found4 = !!userDocument4;
+            if (found4) {
+                return Result.fail<ISignUpRequestDTO>("Patient request already exists with email=" + userDTO.email);
             }
 
             const requestOrError = await SignUpRequest.create(userDTO);

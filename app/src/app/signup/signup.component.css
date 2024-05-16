@@ -208,3 +208,8 @@
   color: var(--font-color);
   cursor: pointer;
 }
+
+.flip-card__btn[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

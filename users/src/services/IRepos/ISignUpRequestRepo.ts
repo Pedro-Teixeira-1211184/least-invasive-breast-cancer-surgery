@@ -11,6 +11,7 @@ export default interface ISignUpRequestRepo extends Repo<SignUpRequest> {
   savePatient(signUpRequest: SignUpRequestPatient): Promise<SignUpRequestPatient>;
   findByEmail(email: string): Promise<SignUpRequest>;
   findPatientByEmail(email: UserEmail | string): Promise<SignUpRequestPatient>;
+  findByPatientSns(sns: number): Promise<SignUpRequestPatient>;
   delete(signUpRequest: SignUpRequest): Promise<ISignUpRequestDTO>;
   deletePatient(signUpRequest: SignUpRequestPatient): Promise<ISignUpRequestPatientDTO>;
   exists(signUpRequest: SignUpRequest): Promise<boolean>;

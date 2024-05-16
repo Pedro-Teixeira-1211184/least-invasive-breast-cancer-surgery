@@ -21,6 +21,21 @@ export default class SignUpRequestRepo implements ISignUpRequestRepo {
     ) {
     }
 
+    public async findByPatientSns(sns: number): Promise<SignUpRequestPatient> {
+        try {
+            //determines if the floor exists in the database by his number and buildingCode
+            const query = {signUpRequestSns: sns};
+            const floorDocument = await this.signUpRequestPatientSchema.findOne(query as FilterQuery<ISignUpRequestPatientPersistence & Document>);
+            if (floorDocument != null) {
+                return await SignUpRequestPatientMap.toDomain(floorDocument);
+            } else {
+                return null;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public async deletePatient(signUpRequest: SignUpRequestPatient): Promise<ISignUpRequestPatientDTO> {
         try {
             this.signUpRequestPatientSchema.deleteOne({signUpRequestEmail: signUpRequest.email}, (err) => {
