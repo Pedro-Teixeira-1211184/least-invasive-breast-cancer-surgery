@@ -6,6 +6,26 @@
         <language minSize="156" name="TypeScript" />
       </Languages>
     </inspection_tool>
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="11">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="ejs-toolbar" />
+            <item index="7" class="java.lang.String" itemvalue="e-item" />
+            <item index="8" class="java.lang.String" itemvalue="e-items" />
+            <item index="9" class="java.lang.String" itemvalue="ejs-sidebar" />
+            <item index="10" class="java.lang.String" itemvalue="ejs-menu" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
     <inspection_tool class="JSDeprecatedSymbols" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
   </profile>
 </component>

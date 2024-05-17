@@ -1,0 +1,53 @@
+.home-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.project-description {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.image-gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.image-gallery img {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+svg {
+  z-index: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+
+.links {
+  position: fixed;
+  font-size: 18px;
+  font-family: sans-serif;
+}
+a {
+  text-decoration: none;
+  color: black;
+  margin-left: 1em;
+}
+a:hover {
+  text-decoration: underline;
+}
+a img.icon {
+  display: inline-block;
+  height: 1em;
+  margin: 0 0 -0.1em 0.3em;
+}
