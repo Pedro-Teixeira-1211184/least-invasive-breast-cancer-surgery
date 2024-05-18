@@ -16,7 +16,7 @@ export class UserMap extends Mapper<User> {
 
   public static toDTO( user: User): IUserDTO {
     return {
-      //id: user.id.toString(),
+      id: user.id.toString(),
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email.value,

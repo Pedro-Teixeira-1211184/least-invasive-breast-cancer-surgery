@@ -1,1 +1,21 @@
-<p>models-patient works!</p>
+<div class="model-table-container">
+  <h2>Your models</h2>
+  <table class="model-table">
+    <thead>
+    <tr>
+      <th>Description</th>
+      <th class="download-column">Download</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let model of models">
+      <td>{{ model.description }}</td>
+      <td class="download-column">
+        <button (click)="downloadModel(model)">
+          <span class="material-symbols-rounded">download</span>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

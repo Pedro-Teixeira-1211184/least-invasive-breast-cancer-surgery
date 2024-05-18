@@ -13,7 +13,7 @@ export class SignUpRequestPatientMap extends Mapper<SignUpRequestPatient> {
             firstName: request.firstName,
             lastName: request.lastName,
             email: request.email,
-            password: "",
+            password: request.password,
             sns: request.sns,
         } as ISignUpRequestPatientDTO;
     }

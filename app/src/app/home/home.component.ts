@@ -1,8 +1,11 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {AuthService} from "../service/auth/auth.service";
 import {NgIf} from "@angular/common";
 import Constants from "../utils/Constants";
 import {BodyComponent} from "./body/body.component";
+import {RequestsStaffComponent} from "./admin/requests-staff/requests-staff.component";
+import {RequestsPatientComponent} from "./admin/requests-patient/requests-patient.component";
+import {ModelsPatientComponent} from "./patient/models-patient/models-patient.component";
 
 @Component({
   selector: 'app-home',
@@ -10,12 +13,15 @@ import {BodyComponent} from "./body/body.component";
   templateUrl: './home.component.html',
   imports: [
     NgIf,
-    BodyComponent
+    BodyComponent,
+    RequestsStaffComponent,
+    RequestsPatientComponent,
+    ModelsPatientComponent
 
   ],
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   constructor() {
   }
 
@@ -75,6 +81,30 @@ export class HomeComponent {
     this.home_body = false;
     this.patients_requests = false;
     this.view_patient_models = false;
+    this.view_imagiologist_models = false;
+    this.upload_imagiologist = false;
+    this.view_doctor_models = false;
+    this.view_doctor_patients = false;
+    this.upload_doctor = false;
+  }
+
+  showPatientRequests() {
+    this.patients_requests = true;
+    this.home_body = false;
+    this.staff_requests = false;
+    this.view_patient_models = false;
+    this.view_imagiologist_models = false;
+    this.upload_imagiologist = false;
+    this.view_doctor_models = false;
+    this.view_doctor_patients = false;
+    this.upload_doctor = false;
+  }
+
+  showPatientModels() {
+    this.view_patient_models = true;
+    this.home_body = false;
+    this.staff_requests = false;
+    this.patients_requests = false;
     this.view_imagiologist_models = false;
     this.upload_imagiologist = false;
     this.view_doctor_models = false;

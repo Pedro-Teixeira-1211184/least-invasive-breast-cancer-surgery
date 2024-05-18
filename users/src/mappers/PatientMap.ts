@@ -16,7 +16,7 @@ export class PatientMap extends Mapper<Patient> {
 
     public static toDTO(user: Patient): IPatientDTO {
         return {
-            //id: user.id.toString(),
+            id: user.id.toString(),
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email.value,

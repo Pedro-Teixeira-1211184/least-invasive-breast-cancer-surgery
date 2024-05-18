@@ -2,26 +2,33 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
 <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
+<header class="header">
+  <nav class="nav-links">
+    <a (click)="goHome()"><span class="material-symbols-rounded">home</span></a>
+    <a *ngIf="isDoctor" class="option-nav">Upload</a>
+    <a *ngIf="isImagiologist" class="option-nav">Upload</a>
+    <a *ngIf="isDoctor" class="option-nav">Models</a>
+    <a *ngIf="isImagiologist" class="option-nav">Models</a>
+    <a *ngIf="isPatient" (click)="showPatientModels()" class="option-nav">Models</a>
+    <a *ngIf="isAdmin" (click)="showStaffRequests()" class="option-nav">Staff</a>
+    <a *ngIf="isAdmin" (click)="showPatientRequests()" class="option-nav">Patients</a>
+  </nav>
+  <a class="logout" (click)="logout()">
+    <span class="material-symbols-rounded">logout</span>
+  </a>
+</header>
 <div class="main-container">
-  <header class="header">
-    <nav class="nav-links">
-      <a (click)="goHome()"><span class="material-symbols-rounded">home</span></a>
-      <a *ngIf="isDoctor" class="option-nav">Upload</a>
-      <a *ngIf="isImagiologist" class="option-nav">Upload</a>
-      <a *ngIf="isDoctor" class="option-nav">Models</a>
-      <a *ngIf="isImagiologist" class="option-nav">Models</a>
-      <a *ngIf="isPatient" class="option-nav">Models</a>
-      <a *ngIf="isAdmin" (click)="showStaffRequests()" class="option-nav">Staff</a>
-      <a *ngIf="isAdmin" class="option-nav">Patients</a>
-    </nav>
-    <a class="logout" (click)="logout()">
-    <span class="material-symbols-rounded">
-logout
-</span>
-    </a>
-  </header>
   <div *ngIf="home_body" id="content">
     <app-body></app-body>
+  </div>
+  <div *ngIf="staff_requests" id="content">
+    <app-requests-staff></app-requests-staff>
+  </div>
+  <div *ngIf="patients_requests" id="content">
+    <app-requests-patient></app-requests-patient>
+  </div>
+  <div *ngIf="view_patient_models" id="content">
+    <app-models-patient></app-models-patient>
   </div>
 </div>
 

@@ -1,0 +1,60 @@
+/* Importar a fonte Material Symbols */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0');
+
+.model-table-container {
+  padding: 20px;
+}
+
+.model-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: transparent; /* Tornar a tabela transparente */
+}
+
+.model-table th, .model-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  background-color: transparent; /* Tornar as células transparentes */
+}
+
+.model-table th {
+  background-color: rgba(242, 242, 242, 0.8); /* Tornar os cabeçalhos semi-transparentes */
+}
+
+/* Remover o estilo de hover */
+.model-table tr:nth-child(even) {
+  background-color: transparent; /* Tornar as linhas pares transparentes */
+}
+
+.model-table tr {
+  background-color: transparent; /* Tornar todas as linhas transparentes */
+}
+
+.download-column {
+  width: 50px; /* Ajustar conforme necessário */
+  text-align: center;
+  vertical-align: middle; /* Centralizar verticalmente */
+}
+
+button {
+  padding: 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto; /* Centralizar horizontalmente */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.material-symbols-rounded {
+  font-size: 24px;
+}

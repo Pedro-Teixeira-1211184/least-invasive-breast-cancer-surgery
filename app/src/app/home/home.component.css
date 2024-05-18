@@ -58,6 +58,5 @@
 /* Conteúdo principal */
 #content {
   flex-grow: 1;
-  background-color: lightgray;
   height: 100%;
 }

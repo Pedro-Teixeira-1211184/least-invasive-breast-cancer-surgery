@@ -34,6 +34,7 @@ export class AuthService {
         localStorage.setItem('email', data.userDTO.email);
         localStorage.setItem('firstName', data.userDTO.firstName);
         localStorage.setItem('lastName', data.userDTO.lastName);
+        localStorage.setItem('id', data.userDTO.id);
         window.location.href = '/home';
       } else {
         const response = await fetch(Constants.API_AUTH_LOGIN_URL_PATIENT, {
@@ -56,6 +57,7 @@ export class AuthService {
           localStorage.setItem('firstName', data.userDTO.firstName);
           localStorage.setItem('lastName', data.userDTO.lastName);
           localStorage.setItem('sns', data.userDTO.sns);
+          localStorage.setItem('id', data.userDTO.id);
           window.location.href = '/home';
         } else {
           alert('Invalid credentials');
@@ -82,7 +84,7 @@ export class AuthService {
 
   public async signUpRequestUser(firstName: string, lastName: string, email: string, password: string): Promise<void> {
     try {
-      const response = await fetch(Constants.API_AUTH_SIGNUP_URL, {
+      const response = await fetch(Constants.API_AUTH_SIGNUP_REQUEST_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -106,9 +108,48 @@ export class AuthService {
     }
   }
 
+  public async deleteStaffRequest(email: string): Promise<void> {
+    try {
+      const response = await fetch(Constants.API_AUTH_SIGNUP_REQUEST_DELETE_URL + email, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        alert('Request deleted');
+      } else {
+        alert('Error deleting request');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async deletePatientRequest(email: string, msg: string): Promise<void> {
+    try {
+      const response = await fetch(Constants.API_AUTH_SIGNUP_REQUEST_DELETE_URL_PATIENT + email, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        if (msg === 'yes')
+        alert('Request deleted');
+      } else {
+        alert('Error deleting request');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   public async signUpRequestPatient(firstName2: string, lastName2: string, sns: string, email2: string, password2: string): Promise<void> {
     try {
-      const response = await fetch(Constants.API_AUTH_SIGNUP_URL_PATIENT, {
+      const response = await fetch(Constants.API_AUTH_SIGNUP_REQUEST_URL_PATIENT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -133,6 +174,62 @@ export class AuthService {
     }
   }
 
+  public async signUpStaff(firstName: string, lastName: string, email: string, password: string, role: string): Promise<void> {
+    try {
+      const response = await fetch(Constants.API_AUTH_SIGNUP_STAFF_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          role: role
+        })
+      });
+
+      if (response.status === 201) {
+        alert('User created');
+        window.location.href = '/home';
+      } else {
+        alert('Error creating user');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async signUpPatient(firstName: string, lastName: string, email: string, password: string, role: string , sns: number): Promise<void> {
+    try {
+      const response = await fetch(Constants.API_AUTH_SIGNUP_PATIENT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          role: role,
+          sns: sns
+        })
+      });
+
+      if (response.status === 201) {
+        alert('User created');
+        await this.deletePatientRequest(email, 'no');
+        window.location.href = '/home';
+      } else {
+        alert('Error creating user');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   public async getAllRoles(): Promise<IRoleDTO[]> {
     try {
       const response = await fetch(Constants.API_GET_ROLES, {
@@ -141,6 +238,42 @@ export class AuthService {
           'Content-Type': 'application/json'
         }
       });
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  }
+
+  public async getStaffRequests(): Promise<any> {
+    try {
+      const response = await fetch(Constants.API_GET_REQUESTS, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.status === 403) {
+        return [];
+      }
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  }
+
+  public async getPatientRequests(): Promise<any> {
+    try {
+      const response = await fetch(Constants.API_GET_REQUESTS_PATIENTS, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.status === 403) {
+        return [];
+      }
       return await response.json();
     } catch (e) {
       console.log(e);

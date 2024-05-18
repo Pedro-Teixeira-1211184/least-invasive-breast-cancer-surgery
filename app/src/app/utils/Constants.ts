@@ -10,8 +10,16 @@ export default class Constants {
   public static readonly API_AUTH_LOGIN_URL_PATIENT = Constants.API_BASE_URL_USERS + 'api/auth/signin/patient';
 
   // user signup request
-  public static readonly API_AUTH_SIGNUP_URL = Constants.API_BASE_URL_USERS + 'api/auth/request';
-  public static readonly API_AUTH_SIGNUP_URL_PATIENT = Constants.API_BASE_URL_USERS + 'api/auth/request/patient';
+  public static readonly API_AUTH_SIGNUP_REQUEST_URL = Constants.API_BASE_URL_USERS + 'api/auth/request/';
+  public static readonly API_AUTH_SIGNUP_REQUEST_DELETE_URL = Constants.API_BASE_URL_USERS + 'api/auth/request/';
+  public static readonly API_AUTH_SIGNUP_REQUEST_URL_PATIENT = Constants.API_BASE_URL_USERS + 'api/auth/request/patient/';
+  public static readonly API_AUTH_SIGNUP_REQUEST_DELETE_URL_PATIENT = Constants.API_BASE_URL_USERS + 'api/auth/request/patient/';
+  public static readonly API_GET_REQUESTS = Constants.API_BASE_URL_USERS + 'api/auth/request';
+  public static readonly API_GET_REQUESTS_PATIENTS = Constants.API_BASE_URL_USERS + 'api/auth/request/patient/';
+
+  // Sign Up
+  public static readonly API_AUTH_SIGNUP_STAFF_URL = Constants.API_BASE_URL_USERS + 'api/auth/signup';
+  public static readonly API_AUTH_SIGNUP_PATIENT_URL = Constants.API_BASE_URL_USERS + 'api/auth/signup/patient';
 
   // roles
   public static readonly ROLE_ADMIN = 'admin';
@@ -19,4 +27,8 @@ export default class Constants {
   public static readonly ROLE_PATIENT = 'patient';
   public static readonly ROLE_IMAGIOLOGIST = 'imagiologist';
   public static readonly API_GET_ROLES = Constants.API_BASE_URL_USERS + 'api/roles';
+
+  // models
+  public static readonly API_GET_MODELS_PATIENTID = Constants.API_BASE_URL_MODELS + 'api/models/patient/';
+  public static readonly API_GET_MODELS_MODELID = Constants.API_BASE_URL_MODELS + 'api/models/';
 }
