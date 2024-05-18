@@ -64,6 +64,10 @@ export default {
         model: {
             name: "ModelRepo",
             path: "../repos/modelRepo"
+        },
+        modelPermission: {
+            name: "ModelPermissionRepo",
+            path: "../repos/modelPermissionRepo"
         }
     },
 
@@ -75,6 +79,10 @@ export default {
         model: {
             name: "ModelService",
             path: "../services/modelService"
+        },
+        modelPermission: {
+            name: "ModelPermissionService",
+            path: "../services/modelPermissionService"
         }
     },
 };

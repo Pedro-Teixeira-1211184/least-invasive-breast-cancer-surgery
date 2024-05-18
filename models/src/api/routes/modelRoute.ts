@@ -27,13 +27,14 @@ export default (app: Router) => {
     const upload = multer({storage: storage});
 
     // Route for uploading a single .obj file
-    route.post('/', upload.single('file'),celebrate ({
-        body: Joi.object({
-            patientId: Joi.string().required(),
-            description: Joi.string().required()
+    route.post('/', upload.single('file'), celebrate({
+            body: Joi.object({
+                patientId: Joi.string().required(),
+                description: Joi.string().required()
+            }),
         }),
-    }),
-        (req, res, next) => ctrl.uploadModel(req, res, next));
+        (req, res, next) =>
+            ctrl.uploadModel(req, res, next));
 
     // download model by its id
     route.get('/:id',
@@ -42,11 +43,14 @@ export default (app: Router) => {
                 id: Joi.string().required()
             })
         }),
-        (req, res, next) => ctrl.downloadModel(req, res, next));
+        (req, res, next) =>
+            ctrl.downloadModel(req, res, next));
 
 
     // get all models
-    route.get('/', (req, res, next) => ctrl.getAllModels(req, res, next));
+    route.get('/',
+        (req, res, next) =>
+            ctrl.getAllModels(req, res, next));
 
     // get model by patient id
     route.get('/patient/:id',
@@ -55,7 +59,8 @@ export default (app: Router) => {
                 id: Joi.string().required()
             })
         }),
-        (req, res, next) => ctrl.getModelByPatientId(req, res, next));
+        (req, res, next) =>
+            ctrl.getModelByPatientId(req, res, next));
 
     // delete model by id
     route.delete('/:id',
@@ -64,5 +69,17 @@ export default (app: Router) => {
                 id: Joi.string().required()
             })
         }),
-        (req, res, next) => ctrl.deleteModel(req, res, next));
+        (req, res, next) =>
+            ctrl.deleteModel(req, res, next));
+
+    // model permission routes
+    route.post('/permission',
+        celebrate({
+            body: Joi.object({
+                doctorId: Joi.string().required(),
+                modelId: Joi.string().required()
+            })
+        }),
+        (req, res, next) =>
+            ctrl.createModelPermission(req, res, next));
 };

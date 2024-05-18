@@ -6,6 +6,7 @@ import {BodyComponent} from "./body/body.component";
 import {RequestsStaffComponent} from "./admin/requests-staff/requests-staff.component";
 import {RequestsPatientComponent} from "./admin/requests-patient/requests-patient.component";
 import {ModelsPatientComponent} from "./patient/models-patient/models-patient.component";
+import {UploadDoctorComponent} from "./doctor/upload-doctor/upload-doctor.component";
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ import {ModelsPatientComponent} from "./patient/models-patient/models-patient.co
     BodyComponent,
     RequestsStaffComponent,
     RequestsPatientComponent,
-    ModelsPatientComponent
+    ModelsPatientComponent,
+    UploadDoctorComponent
 
   ],
   styleUrl: './home.component.css'
@@ -110,5 +112,17 @@ export class HomeComponent implements OnInit{
     this.view_doctor_models = false;
     this.view_doctor_patients = false;
     this.upload_doctor = false;
+  }
+
+  uploadDoctorModels() {
+    this.upload_doctor = true;
+    this.home_body = false;
+    this.staff_requests = false;
+    this.patients_requests = false;
+    this.view_patient_models = false;
+    this.view_imagiologist_models = false;
+    this.upload_imagiologist = false;
+    this.view_doctor_models = false;
+    this.view_doctor_patients = false;
   }
 }

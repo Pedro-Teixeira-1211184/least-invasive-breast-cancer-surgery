@@ -10,4 +10,6 @@ export default interface IModelController {
     getModelByPatientId(req: Request, res: Response, next: NextFunction);
 
     deleteModel(req: Request, res: Response, next: NextFunction);
+
+    createModelPermission(req: Request, res: Response, next: NextFunction);
 }

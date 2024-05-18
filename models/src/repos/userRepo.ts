@@ -7,6 +7,7 @@ import {User} from "../domain/user";
 import {IPatientPersistence} from "../dataschema/IPatientPersistence";
 import {Patient} from '../domain/patient';
 import {PatientMap} from "../mappers/PatientMap";
+import {IUserPersistence} from "../dataschema/IUserPersistence";
 
 @Service()
 export default class UserRepo implements IUserRepo {
@@ -14,8 +15,19 @@ export default class UserRepo implements IUserRepo {
 
     constructor(
         @Inject('patientSchema') private patientSchema: Model<IPatientPersistence & Document>,
+        @Inject('userSchema') private userSchema: Model<IUserPersistence & Document>,
         @Inject('logger') private logger
     ) {
+    }
+
+    public async existDoctorById(doctorId: string): Promise<boolean> {
+        try {
+            const doctor = await this.userSchema.findOne({domainId: doctorId});
+            return !!doctor;
+        } catch (e) {
+            this.logger.error(e);
+            throw e;
+        }
     }
 
     exists(t: User): Promise<boolean> {

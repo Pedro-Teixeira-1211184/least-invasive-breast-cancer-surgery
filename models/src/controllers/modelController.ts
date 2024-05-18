@@ -9,14 +9,33 @@ import IModelService from "../services/IServices/IModelService";
 import IModelDTO from "../dto/IModelDTO";
 import {ParsedQs} from 'qs';
 import IUserServiceOnion from "../services/IServices/IUserServiceOnion";
+import IModelPermissionService from "../services/IServices/IModelPermissionService";
 
 
 @Service()
 export default class ModelController implements IModelController /* TODO: extends ../core/infra/BaseController */ {
     constructor(
         @Inject(config.services.model.name) private modelServiceInstance: IModelService,
-        @Inject(config.services.user.name) private userServiceInstance: IUserServiceOnion
+        @Inject(config.services.user.name) private userServiceInstance: IUserServiceOnion,
+        @Inject(config.services.modelPermission.name) private modelPermissionServiceInstance: IModelPermissionService
     ) {
+    }
+
+    public async createModelPermission(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {
+        try {
+            console.log('Creating model permission...');
+            const modelPermissionDTO = req.body;
+
+            const result = await this.modelPermissionServiceInstance.createModelPermission(modelPermissionDTO);
+
+            if (result.isFailure) {
+                return res.status(403).json(result.errorValue());
+            }
+
+            return res.status(201).json(result.getValue());
+        } catch (e) {
+            next(e);
+        }
     }
 
     public async deleteModel(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {

@@ -15,9 +15,19 @@ export default async ({expressApp}) => {
         schema: '../persistence/schemas/modelSchema',
     }
 
+    const userSchema = {
+        name: 'userSchema',
+        schema: '../persistence/schemas/userSchema',
+    }
+
     const patientSchema = {
         name: 'patientSchema',
         schema: '../persistence/schemas/patientSchema',
+    }
+
+    const modePermissionSchema = {
+        name: 'modelPermissionSchema',
+        schema: '../persistence/schemas/modelPermissionSchema',
     }
 
     const modelController = {
@@ -35,6 +45,11 @@ export default async ({expressApp}) => {
         path: config.repos.user.path
     }
 
+    const modelPermissionRepo = {
+        name: config.repos.modelPermission.name,
+        path: config.repos.modelPermission.path
+    }
+
     const modelService = {
         name: config.services.model.name,
         path: config.services.model.path
@@ -45,22 +60,31 @@ export default async ({expressApp}) => {
         path: config.services.user.path
     }
 
+    const modelPermissionService = {
+        name: config.services.modelPermission.name,
+        path: config.services.modelPermission.path
+    }
+
     await dependencyInjectorLoader({
         mongoConnection,
         schemas: [
             modelSchema,
-            patientSchema
+            patientSchema,
+            modePermissionSchema,
+            userSchema
         ],
         controllers: [
             modelController
         ],
         repos: [
             modelRepo,
-            userRepo
+            userRepo,
+            modelPermissionRepo
         ],
         services: [
             modelService,
-            userService
+            userService,
+            modelPermissionService
         ]
     });
     Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
