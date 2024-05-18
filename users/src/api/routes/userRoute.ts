@@ -232,6 +232,8 @@ export default (app: Router) => {
 
     route.get('', (req: Request, res: Response, next: NextFunction) => ctrl.getAllPatients(req, res, next));
 
+    route.get('/:id', (req: Request, res: Response, next: NextFunction) => ctrl.getPatientById(req, res, next));
+
     // USERS PATH
 
     app.use('/users', route);

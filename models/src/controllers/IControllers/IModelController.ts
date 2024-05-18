@@ -12,4 +12,8 @@ export default interface IModelController {
     deleteModel(req: Request, res: Response, next: NextFunction);
 
     createModelPermission(req: Request, res: Response, next: NextFunction);
+
+    getModelsByDoctorId(req: Request, res: Response, next: NextFunction);
+
+    deleteModelPermissionByModelId(req: Request, res: Response, next: NextFunction);
 }

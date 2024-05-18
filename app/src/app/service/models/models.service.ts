@@ -46,4 +46,61 @@ export class ModelsService {
       console.error(e)
     }
   }
+
+  public async getModelByDoctorId(doctorId: string): Promise<any> {
+    try {
+      const response = await fetch(Constants.API_GET_MODELS_DOCTORID + doctorId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        return await response.json();
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  public async deleteModelPermissionsByModelId(modelId: string): Promise<any> {
+    try {
+      const response = await fetch(Constants.API_DELETE_MODELS_PERMISSIONS_MODELID + modelId, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        return await response.json();
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  public async deleteModelByModelId(modelId: string): Promise<any> {
+    try {
+      const response = await fetch(Constants.API_DELETE_MODELS_MODELID + modelId, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        return await response.json();
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
 }

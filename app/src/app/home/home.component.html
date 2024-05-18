@@ -5,9 +5,8 @@
 <header class="header">
   <nav class="nav-links">
     <a (click)="goHome()"><span class="material-symbols-rounded">home</span></a>
-    <a *ngIf="isDoctor" (click)="uploadDoctorModels()" class="option-nav">Upload</a>
+    <a *ngIf="isDoctor" (click)="uploadDoctorModels()" class="option-nav">Models</a>
     <a *ngIf="isImagiologist" class="option-nav">Upload</a>
-    <a *ngIf="isDoctor" class="option-nav">Models</a>
     <a *ngIf="isImagiologist" class="option-nav">Models</a>
     <a *ngIf="isPatient" (click)="showPatientModels()" class="option-nav">Models</a>
     <a *ngIf="isAdmin" (click)="showStaffRequests()" class="option-nav">Staff</a>

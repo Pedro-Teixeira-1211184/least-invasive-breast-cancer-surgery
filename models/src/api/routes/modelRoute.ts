@@ -72,6 +72,16 @@ export default (app: Router) => {
         (req, res, next) =>
             ctrl.deleteModel(req, res, next));
 
+    // get doctor's models
+    route.get('/doctor/:id',
+        celebrate({
+            params: Joi.object({
+                id: Joi.string().required()
+            })
+        }),
+        (req, res, next) =>
+            ctrl.getModelsByDoctorId(req, res, next));
+
     // model permission routes
     route.post('/permission',
         celebrate({
@@ -82,4 +92,10 @@ export default (app: Router) => {
         }),
         (req, res, next) =>
             ctrl.createModelPermission(req, res, next));
+
+    route.delete('/permission/:id', celebrate({
+        params: Joi.object({
+            id: Joi.string().required()
+        })
+    }), (req, res, next) => ctrl.deleteModelPermissionByModelId(req, res, next));
 };

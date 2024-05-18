@@ -31,4 +31,7 @@ export default class Constants {
   // models
   public static readonly API_GET_MODELS_PATIENTID = Constants.API_BASE_URL_MODELS + 'api/models/patient/';
   public static readonly API_GET_MODELS_MODELID = Constants.API_BASE_URL_MODELS + 'api/models/';
+  public static readonly API_GET_MODELS_DOCTORID = Constants.API_BASE_URL_MODELS + 'api/models/doctor/';
+  public static readonly API_DELETE_MODELS_MODELID = Constants.API_BASE_URL_MODELS + 'api/models/';
+  public static readonly API_DELETE_MODELS_PERMISSIONS_MODELID = Constants.API_BASE_URL_MODELS + 'api/models/permission/';
 }

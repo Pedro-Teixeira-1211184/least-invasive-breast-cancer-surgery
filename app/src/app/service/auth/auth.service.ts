@@ -281,6 +281,22 @@ export class AuthService {
     }
   }
 
+  public async getPatientById(patientId: string): Promise<any> {
+    try {
+      const response = await fetch(Constants.API_BASE_URL_USERS + 'api/patients/' + patientId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+
+  }
+
   clearLocalStorage(): void {
     localStorage.removeItem('token')
     localStorage.removeItem('role')

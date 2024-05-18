@@ -23,6 +23,20 @@ export default class UserRepo implements IUserRepo {
     ) {
     }
 
+    public async findPatientById(id: string): Promise<Patient> {
+        try {
+            const query = {domainId: id};
+            const userRecord = await this.patientSchema.findOne(query);
+
+            if (userRecord != null) {
+                return PatientMap.toDomain(userRecord);
+            } else
+                return null;
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     public async findBySns(sns: number): Promise<Patient> {
         const query = {sns: sns.toString()};
         const userRecord = await this.patientSchema.findOne(query);

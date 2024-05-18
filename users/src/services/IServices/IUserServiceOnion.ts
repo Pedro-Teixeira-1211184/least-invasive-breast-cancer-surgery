@@ -14,4 +14,5 @@ export default interface IUserServiceOnion  {
   getAllUserRequests(): Promise<Result<ISignUpRequestDTO[]>>;
   deleteUserRequest(email: string): Promise<Result<ISignUpRequestDTO>>;
   deletePatientRequest(email: string): Promise<Result<ISignUpRequestPatientDTO>>;
+  getPatientById(patientId: string): Promise<Result<IPatientDTO>>;
 }

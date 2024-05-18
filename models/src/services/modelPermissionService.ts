@@ -18,6 +18,22 @@ export default class ModelPermissionService implements IModelPermissionService {
     ) {
     }
 
+    public async deleteModelPermissionByModelId(modelId: string): Promise<Result<IModelPermissionDTO[]>> {
+        try {
+            const modelPermissions = await this.modelPermissionRepo.findByModelId(modelId);
+            if (modelPermissions.length === 0) {
+                return Result.fail<IModelPermissionDTO[]>("Model permissions not found");
+            }
+            const deleteResult = await this.modelPermissionRepo.deleteByModelId(modelId);
+            if (deleteResult.length === 0) {
+                return Result.fail<IModelPermissionDTO[]>("Model permissions not deleted");
+            }
+            return Result.ok<IModelPermissionDTO[]>(modelPermissions.map((modelPermission) => ModelPermissionMap.toDTO(modelPermission)));
+        } catch (error) {
+            return Result.fail<IModelPermissionDTO[]>(error);
+        }
+    }
+
     public async createModelPermission(modelPermission: IModelPermissionDTO): Promise<Result<IModelPermissionDTO>> {
         try {
             //find doctor
@@ -55,8 +71,16 @@ export default class ModelPermissionService implements IModelPermissionService {
         throw new Error('Method not implemented.');
     }
 
-    getModelPermissionByDoctorId(doctorId: string): Promise<Result<IModelPermissionDTO[]>> {
-        throw new Error('Method not implemented.');
+    public async getModelPermissionByDoctorId(doctorId: string): Promise<Result<IModelPermissionDTO[]>> {
+        try {
+            const modelPermissions = await this.modelPermissionRepo.findByDoctorId(doctorId);
+            if (!modelPermissions) {
+                return Result.fail<IModelPermissionDTO[]>("Model permissions not found");
+            }
+            return Result.ok<IModelPermissionDTO[]>(modelPermissions.map((modelPermission) => ModelPermissionMap.toDTO(modelPermission)));
+        } catch (error) {
+            return Result.fail<IModelPermissionDTO[]>(error);
+        }
     }
 
     getModelPermissionByModelId(modelId: string): Promise<Result<IModelPermissionDTO[]>> {

@@ -1,1 +1,28 @@
-<p>upload-doctor works!</p>
+<div class="model-table-container">
+  <h2>Models</h2>
+  <table class="model-table">
+    <thead>
+    <tr>
+      <th>Patient</th>
+      <th>Healthcare Number</th>
+      <th>Description</th>
+      <th class="download-column">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let model of models">
+      <td>{{ model.patient }}</td>
+      <td>{{ model.sns }}</td>
+      <td>{{ model.description }}</td>
+      <td class="download-column">
+        <button (click)="downloadModel(model)" class="download-button">
+          <span class="material-symbols-rounded">download</span>
+        </button>
+        <button (click)="deleteModel(model)" class="delete-button">
+          <span class="material-symbols-rounded">delete</span>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

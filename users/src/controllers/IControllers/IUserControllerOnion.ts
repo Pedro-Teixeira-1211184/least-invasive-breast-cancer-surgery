@@ -10,4 +10,5 @@ export default interface IUserControllerOnion  {
   getAllPatientRequests(req: Request, res: Response, next: NextFunction);
   deleteUserRequest(req: Request, res: Response, next: NextFunction);
   deletePatientRequest(req: Request, res: Response, next: NextFunction);
+  getPatientById(req: Request, res: Response, next: NextFunction);
 }

@@ -16,7 +16,7 @@ import argon2 from "argon2";
 import {ISignUpRequestPatientDTO} from '../dto/ISignUpRequestPatientDTO';
 import {SignUpRequestPatient} from "../domain/signUpRequestPatient";
 import {SignUpRequestPatientMap} from "../mappers/SignUpRequestPatientMap";
-import { IPatientDTO } from '../dto/IPatientDTO';
+import {IPatientDTO} from '../dto/IPatientDTO';
 import {PatientMap} from "../mappers/PatientMap";
 
 @Service()
@@ -27,6 +27,19 @@ export default class UserServiceOnion implements IUserServiceOnion {
         @Inject(config.repos.role.name) private roleRepo: IRoleRepo,
         @Inject('logger') private logger,
     ) {
+    }
+
+    public async getPatientById(patientId: string): Promise<Result<IPatientDTO>> {
+        try {
+            const user = await this.userRepo.findPatientById(patientId);
+            if (user == null) {
+                return Result.fail<IPatientDTO>("Patient not found");
+            }
+            const userDTO = PatientMap.toDTO(user);
+            return Result.ok<IPatientDTO>(userDTO);
+        } catch (e) {
+            throw e;
+        }
     }
 
     public async getAllPatients(): Promise<Result<IPatientDTO[]>> {

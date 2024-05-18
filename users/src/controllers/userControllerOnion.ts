@@ -19,6 +19,19 @@ export default class UserControllerOnion implements IUserControllerOnion /* TODO
     ) {
     }
 
+    public async getPatientById(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {
+        try {
+            const id = req.params.id;
+            const user = await this.userServiceInstance.getPatientById(id) as Result<IPatientDTO>;
+            if (user.isFailure) {
+                return res.status(404).json(user.errorValue());
+            }
+            return res.status(200).json(user.getValue());
+        } catch (e) {
+            return next(e);
+        }
+    }
+
     public async getAllPatients(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {
         try {
             console.log("Getting patients");

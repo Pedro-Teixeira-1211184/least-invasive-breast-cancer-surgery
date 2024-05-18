@@ -15,6 +15,20 @@ export default class ModelPermissionRepo implements IModelPermissionRepo {
     ) {
     }
 
+    public async deleteByModelId(modelId: string): Promise<ModelPermission[]> {
+        try {
+            const query = {modelId: modelId};
+            const modelDocument = await this.modelPermissionSchema.find(query as FilterQuery<IModelPermissionPersistence & Document>);
+            if (modelDocument == null) {
+                return null;
+            }
+            await this.modelPermissionSchema.deleteMany(query as FilterQuery<IModelPermissionPersistence & Document>);
+            return modelDocument.map((modelDocument) => ModelPermissionMap.toDomain(modelDocument));
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public async exists(model: ModelPermission): Promise<boolean> {
         try {
             const query = {modelId: model.modelId, doctorId: model.doctorId};
