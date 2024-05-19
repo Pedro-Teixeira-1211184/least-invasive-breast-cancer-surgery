@@ -294,6 +294,21 @@ export class AuthService {
       console.log(e);
       return [];
     }
+  }
+
+  public async getAllPatients(): Promise<any> {
+    try {
+      const response = await fetch(Constants.API_GET_PATIENTS, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
 
   }
 

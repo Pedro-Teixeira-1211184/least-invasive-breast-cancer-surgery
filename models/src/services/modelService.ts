@@ -72,7 +72,7 @@ export default class ModelService implements IModelService {
                 return Result.fail<IModelDTO>("Model could not be saved");
             }
 
-            return Result.ok<IModelDTO>(modelDTO);
+            return Result.ok<IModelDTO>(ModelMap.toDTO(save));
         } catch (e) {
             return Result.fail<IModelDTO>(e);
         }

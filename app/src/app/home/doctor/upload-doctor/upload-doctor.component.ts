@@ -3,12 +3,16 @@ import {NgForOf} from "@angular/common";
 import IModelDTO from "../../../dto/IModelDTO";
 import {ModelsService} from "../../../service/models/models.service";
 import {AuthService} from "../../../service/auth/auth.service";
+import {IPatientDTO} from "../../../dto/IPatientDTO";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-upload-doctor',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './upload-doctor.component.html',
   styleUrl: './upload-doctor.component.css'
@@ -20,6 +24,11 @@ export class UploadDoctorComponent implements OnInit {
       return;
     }
     this.getModelsByDoctorId(id);
+    this.getPatients();
+    this.uploadForm = new FormGroup({
+      patient: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+    });
   }
 
   constructor() {
@@ -27,9 +36,21 @@ export class UploadDoctorComponent implements OnInit {
 
   models: (IModelDTO & { patient: string, sns: number })[] = [];
   noModels: boolean = false;
+  selectedFile: File | null = null;
+  patients: IPatientDTO[] = [];
 
   service: ModelsService = inject(ModelsService);
   auth_service: AuthService = inject(AuthService);
+
+  uploadForm!: FormGroup;
+
+  get patient() {
+    return this.uploadForm.get('patient');
+  }
+
+  get description() {
+    return this.uploadForm.get('description');
+  }
 
   public async getModelsByDoctorId(doctorId: string): Promise<any> {
     const response = await this.service.getModelByDoctorId(doctorId);
@@ -38,6 +59,15 @@ export class UploadDoctorComponent implements OnInit {
     } else {
       this.models = response;
       await this.updateModelsInfo();
+    }
+  }
+
+  public async getPatients(): Promise<void> {
+    const response = await this.auth_service.getAllPatients();
+    if (response.length === 0) {
+      console.error('No patients found.');
+    } else {
+      this.patients = response;
     }
   }
 
@@ -84,4 +114,29 @@ export class UploadDoctorComponent implements OnInit {
     }
   }
 
+  public async onSubmit(): Promise<void> {
+    if (this.patient?.value === '' || this.description?.value === '' || this.selectedFile === null) {
+      alert('Fill all fields.');
+      return;
+    }
+    const resp = await this.service.uploadModel(this.selectedFile, this.patient?.value, this.description?.value);
+
+    if (resp !== null) {
+      const docId = localStorage.getItem('id');
+      if (docId === null) {
+        return;
+      }
+      await this.service.doctorFilePermission(docId, resp.id);
+      await this.getModelsByDoctorId(docId);
+      // clear form
+      this.uploadForm.reset();
+    }
+  }
+
+  public async onFileSelected(event: any): Promise<void> {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
 }

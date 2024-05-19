@@ -17,6 +17,9 @@ export default class Constants {
   public static readonly API_GET_REQUESTS = Constants.API_BASE_URL_USERS + 'api/auth/request';
   public static readonly API_GET_REQUESTS_PATIENTS = Constants.API_BASE_URL_USERS + 'api/auth/request/patient/';
 
+  // patient
+  public static readonly API_GET_PATIENTS = Constants.API_BASE_URL_USERS + 'api/patients';
+
   // Sign Up
   public static readonly API_AUTH_SIGNUP_STAFF_URL = Constants.API_BASE_URL_USERS + 'api/auth/signup';
   public static readonly API_AUTH_SIGNUP_PATIENT_URL = Constants.API_BASE_URL_USERS + 'api/auth/signup/patient';
@@ -34,4 +37,6 @@ export default class Constants {
   public static readonly API_GET_MODELS_DOCTORID = Constants.API_BASE_URL_MODELS + 'api/models/doctor/';
   public static readonly API_DELETE_MODELS_MODELID = Constants.API_BASE_URL_MODELS + 'api/models/';
   public static readonly API_DELETE_MODELS_PERMISSIONS_MODELID = Constants.API_BASE_URL_MODELS + 'api/models/permission/';
+  public static readonly API_UPLOAD_MODELS = Constants.API_BASE_URL_MODELS + 'api/models';
+  public static readonly API_UPLOAD_MODELS_PERMISSIONS = Constants.API_BASE_URL_MODELS + 'api/models/permission';
 }

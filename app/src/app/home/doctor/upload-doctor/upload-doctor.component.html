@@ -26,3 +26,24 @@
     </tbody>
   </table>
 </div>
+
+<div class="upload-container">
+  <form class="upload-form" id="roomForm" (ngSubmit)="onSubmit()" [formGroup]="uploadForm" #formDir="ngForm">
+    <h2>Upload a new model</h2>
+    <div class="form-group">
+      <div class="form-group">
+        <label for="file">Choose a file:</label>
+        <input type="file" id="file" (change)="onFileSelected($event)"/>
+      </div>
+      <label for="patient">Patient</label>
+      <select id="patient" formControlName="patient" required>
+        <option *ngFor="let patient of patients" [value]="patient.id">{{ patient.firstName }} {{patient.lastName}} - {{patient.sns}}</option>
+      </select>
+      <label for="description">Description</label>
+      <textarea type="text" id="description" formControlName="description" placeholder="Description" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="upload-button">
+      <span class="material-symbols-rounded">upload</span>
+    </button>
+  </form>
+</div>
