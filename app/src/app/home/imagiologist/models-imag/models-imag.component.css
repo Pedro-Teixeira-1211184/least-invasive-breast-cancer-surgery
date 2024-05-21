@@ -1,0 +1,139 @@
+/* Importar a fonte Material Symbols */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0');
+
+.model-table-container {
+  padding: 20px;
+}
+
+.model-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: transparent; /* Tornar a tabela transparente */
+}
+
+.model-table th, .model-table td {
+  padding: 12px 15px;
+  border: 1px solid #000000;
+  text-align: left;
+  background-color: transparent; /* Tornar as células transparentes */
+}
+
+.model-table {
+  background-color: rgba(242, 242, 242, 0.8); /* Tornar os cabeçalhos semi-transparentes */
+}
+
+/* Remover o estilo de hover */
+.model-table tr:nth-child(even) {
+  background-color: transparent; /* Tornar as linhas pares transparentes */
+}
+
+.model-table tr {
+  background-color: transparent; /* Tornar todas as linhas transparentes */
+}
+
+.download-column {
+  width: 50px; /* Ajustar conforme necessário */
+  text-align: center;
+  vertical-align: middle; /* Centralizar verticalmente */
+}
+
+.download-button {
+  padding: 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto; /* Centralizar horizontalmente */
+}
+
+.download-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button:hover {
+  background-color: #e62e00;
+}
+
+.material-symbols-rounded {
+  font-size: 24px;
+}
+
+.delete-button {
+  padding: 8px;
+  background-color: #ff6700;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto; /* Centralizar horizontalmente */
+}
+
+/* Estilo para o formulário de upload */
+.upload-container {
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.upload-container h2 {
+  margin-bottom: 20px;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+  width: 300px; /* Mesma largura para todos os campos */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkbox-group {
+  margin-bottom: 10px;
+}
+
+.upload-button {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-button:hover {
+  background-color: #218838;
+}
+
+.upload-button .material-symbols-rounded {
+  font-size: 24px;
+}

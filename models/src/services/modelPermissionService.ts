@@ -18,6 +18,18 @@ export default class ModelPermissionService implements IModelPermissionService {
     ) {
     }
 
+    public async getModelPermissionByImagiologistId(imagiologistId: string): Promise<Result<IModelPermissionDTO[]>> {
+        try {
+            const modelPermissions = await this.modelPermissionRepo.findByImagiologistId(imagiologistId);
+            if (!modelPermissions) {
+                return Result.fail<IModelPermissionDTO[]>("Model permissions not found");
+            }
+            return Result.ok<IModelPermissionDTO[]>(modelPermissions.map((modelPermission) => ModelPermissionMap.toDTO(modelPermission)));
+        } catch (error) {
+            return Result.fail<IModelPermissionDTO[]>(error);
+        }
+    }
+
     public async deleteModelPermissionByModelId(modelId: string): Promise<Result<IModelPermissionDTO[]>> {
         try {
             const modelPermissions = await this.modelPermissionRepo.findByModelId(modelId);
@@ -40,6 +52,13 @@ export default class ModelPermissionService implements IModelPermissionService {
             const doctor = await this.userRepo.existDoctorById(modelPermission.doctorId);
             if (!doctor) {
                 return Result.fail<IModelPermissionDTO>("Doctor not found");
+            }
+            //find imagiologist if the request has one
+            if (modelPermission.imagiologistId) {
+                const imagiologist = await this.userRepo.existImagiologistById(modelPermission.imagiologistId)
+                if (!imagiologist) {
+                    return Result.fail<IModelPermissionDTO>("Imagiologist not found");
+                }
             }
             // find model
             const model = await this.modelRepo.findById(modelPermission.modelId);

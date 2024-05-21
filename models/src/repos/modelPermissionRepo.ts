@@ -15,6 +15,19 @@ export default class ModelPermissionRepo implements IModelPermissionRepo {
     ) {
     }
 
+    public async findByImagiologistId(imagiologistId: string): Promise<ModelPermission[]> {
+        try {
+            const query = {imagiologistId: imagiologistId};
+            const modelDocument = await this.modelPermissionSchema.find(query as FilterQuery<IModelPermissionPersistence & Document>);
+            if (modelDocument == null) {
+                return null;
+            }
+            return modelDocument.map((modelDocument) => ModelPermissionMap.toDomain(modelDocument));
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public async deleteByModelId(modelId: string): Promise<ModelPermission[]> {
         try {
             const query = {modelId: modelId};

@@ -8,6 +8,7 @@ export default interface IModelPermissionService {
     getModelPermissionByDoctorId(doctorId: string): Promise<Result<IModelPermissionDTO[]>>;
     getModelPermissionByModelId(modelId: string): Promise<Result<IModelPermissionDTO[]>>;
     getModelPermissionByPatientId(patientId: string): Promise<Result<IModelPermissionDTO[]>>;
+    getModelPermissionByImagiologistId(imagiologistId: string): Promise<Result<IModelPermissionDTO[]>>;
     deleteModelPermission(modelPermissionId: string): Promise<Result<IModelPermissionDTO>>;
     deleteModelPermissionByModelId(modelId: string): Promise<Result<IModelPermissionDTO[]>>;
 }

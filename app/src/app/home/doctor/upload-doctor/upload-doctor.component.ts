@@ -112,6 +112,17 @@ export class UploadDoctorComponent implements OnInit {
       this.models[i].patient = patient.firstName + ' ' + patient.lastName;
       this.models[i].sns = patient.sns;
     }
+
+    // Sort models by patient name
+    this.models.sort((a, b) => {
+      if (a.patient < b.patient) {
+        return -1;
+      }
+      if (a.patient > b.patient) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   public async onSubmit(): Promise<void> {

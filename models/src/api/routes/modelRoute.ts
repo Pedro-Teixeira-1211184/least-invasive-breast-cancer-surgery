@@ -82,11 +82,21 @@ export default (app: Router) => {
         (req, res, next) =>
             ctrl.getModelsByDoctorId(req, res, next));
 
+    route.get('/imagiologist/:id',
+        celebrate({
+            params: Joi.object({
+                id: Joi.string().required()
+            })
+        }),
+        (req, res, next) =>
+            ctrl.getModelsByImagiologistId(req, res, next));
+
     // model permission routes
     route.post('/permission',
         celebrate({
             body: Joi.object({
                 doctorId: Joi.string().required(),
+                imagiologistId: Joi.string(),
                 modelId: Joi.string().required()
             })
         }),

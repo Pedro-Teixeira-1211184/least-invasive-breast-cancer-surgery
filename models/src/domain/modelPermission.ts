@@ -7,6 +7,7 @@ import IModelPermissionDTO from "../dto/IModelPermissionDTO";
 interface ModelProps {
     modelId: string;
     doctorId: string;
+    imagiologistId?: string;
 }
 
 export class ModelPermission extends AggregateRoot<ModelProps> {
@@ -27,6 +28,10 @@ export class ModelPermission extends AggregateRoot<ModelProps> {
         return this.props.doctorId;
     }
 
+    get imagiologistId(): string {
+        return this.props.imagiologistId;
+    }
+
     private constructor(props: ModelProps, id?: UniqueEntityID) {
         super(props, id);
     }
@@ -34,6 +39,7 @@ export class ModelPermission extends AggregateRoot<ModelProps> {
     public static create(modelDTO: IModelPermissionDTO, id?: UniqueEntityID): Result<ModelPermission> {
         const modelId = modelDTO.modelId;
         const doctorId = modelDTO.doctorId;
+        const imagiologistId = modelDTO.imagiologistId;
 
         if (!!modelId === false || modelId.length === 0) {
             return Result.fail<ModelPermission>('Must provide a model id')
@@ -42,7 +48,8 @@ export class ModelPermission extends AggregateRoot<ModelProps> {
         } else {
             const model = new ModelPermission({
                 modelId: modelId,
-                doctorId: doctorId
+                doctorId: doctorId,
+                imagiologistId: imagiologistId
             }, id);
             return Result.ok<ModelPermission>(model)
         }

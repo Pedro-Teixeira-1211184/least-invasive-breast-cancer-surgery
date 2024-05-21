@@ -12,6 +12,7 @@ export class ModelPermissionMap extends Mapper<ModelPermission> {
         return {
             id: model.id.toString(),
             modelId: model.modelId,
+            imagiologistId: model.imagiologistId,
             doctorId: model.doctorId,
         } as IModelPermissionDTO;
     }
@@ -32,6 +33,7 @@ export class ModelPermissionMap extends Mapper<ModelPermission> {
             domainId: model.id.toString(),
             modelId: model.modelId,
             doctorId: model.doctorId,
+            imagiologistId: model.imagiologistId
         }
     }
 }

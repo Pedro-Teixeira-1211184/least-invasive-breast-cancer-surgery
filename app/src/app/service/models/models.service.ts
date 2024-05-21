@@ -66,6 +66,25 @@ export class ModelsService {
     }
   }
 
+  public async getModelByImagiologistId(imgId: string): Promise<any> {
+    try {
+      const response = await fetch(Constants.API_GET_MODELS_IMAGIOLOGISTID + imgId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        return await response.json();
+      } else {
+        return null;
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   public async deleteModelPermissionsByModelId(modelId: string): Promise<any> {
     try {
       const response = await fetch(Constants.API_DELETE_MODELS_PERMISSIONS_MODELID + modelId, {
@@ -135,6 +154,24 @@ export class ModelsService {
         },
         body: JSON.stringify({
           doctorId: doctorId,
+          modelId: modelId
+        })
+      });
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  public async doctorFilePermissionWithImagiologist(doctorId: string, modelId: string, imagiologistId: string): Promise<any> {
+    try {
+      const response = await fetch(Constants.API_UPLOAD_MODELS_PERMISSIONS_IMAGIOLOGIST, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          doctorId: doctorId,
+          imagiologistId: imagiologistId,
           modelId: modelId
         })
       });

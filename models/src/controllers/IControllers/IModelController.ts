@@ -15,5 +15,7 @@ export default interface IModelController {
 
     getModelsByDoctorId(req: Request, res: Response, next: NextFunction);
 
+    getModelsByImagiologistId(req: Request, res: Response, next: NextFunction);
+
     deleteModelPermissionByModelId(req: Request, res: Response, next: NextFunction);
 }

@@ -138,7 +138,7 @@ export class AuthService {
 
       if (response.status === 200) {
         if (msg === 'yes')
-        alert('Request deleted');
+          alert('Request deleted');
       } else {
         alert('Error deleting request');
       }
@@ -201,7 +201,7 @@ export class AuthService {
     }
   }
 
-  public async signUpPatient(firstName: string, lastName: string, email: string, password: string, role: string , sns: number): Promise<void> {
+  public async signUpPatient(firstName: string, lastName: string, email: string, password: string, role: string, sns: number): Promise<void> {
     try {
       const response = await fetch(Constants.API_AUTH_SIGNUP_PATIENT_URL, {
         method: 'POST',
@@ -283,7 +283,7 @@ export class AuthService {
 
   public async getPatientById(patientId: string): Promise<any> {
     try {
-      const response = await fetch(Constants.API_BASE_URL_USERS + 'api/patients/' + patientId, {
+      const response = await fetch(Constants.API_BASE_URL_USERS + 'api/auth/patient/' + patientId, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -312,6 +312,37 @@ export class AuthService {
 
   }
 
+  public async getAllDoctors(): Promise<any> {
+    try {
+      const roleId = await this.getRoleId(Constants.ROLE_DOCTOR);
+      const response = await fetch(Constants.API_GET_USERS_BY_ROLE + roleId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      return await response.json();
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  }
+
+  private async getRoleId(role: string): Promise<string> {
+    try {
+      const roles = await this.getAllRoles();
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === role) {
+          return roles[i].id;
+        }
+      }
+      return '';
+    } catch (e) {
+      console.log(e);
+      return '';
+    }
+  }
+
   clearLocalStorage(): void {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
@@ -319,6 +350,7 @@ export class AuthService {
     localStorage.removeItem('firstName')
     localStorage.removeItem('lastName')
     localStorage.removeItem('sns')
+    localStorage.removeItem('id')
   }
 
 }

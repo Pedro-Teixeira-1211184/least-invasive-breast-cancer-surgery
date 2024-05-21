@@ -7,6 +7,7 @@ import {RequestsStaffComponent} from "./admin/requests-staff/requests-staff.comp
 import {RequestsPatientComponent} from "./admin/requests-patient/requests-patient.component";
 import {ModelsPatientComponent} from "./patient/models-patient/models-patient.component";
 import {UploadDoctorComponent} from "./doctor/upload-doctor/upload-doctor.component";
+import {ModelsImagComponent} from "./imagiologist/models-imag/models-imag.component";
 
 @Component({
   selector: 'app-home',
@@ -18,12 +19,13 @@ import {UploadDoctorComponent} from "./doctor/upload-doctor/upload-doctor.compon
     RequestsStaffComponent,
     RequestsPatientComponent,
     ModelsPatientComponent,
-    UploadDoctorComponent
+    UploadDoctorComponent,
+    ModelsImagComponent
 
   ],
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   constructor() {
   }
 
@@ -44,9 +46,6 @@ export class HomeComponent implements OnInit{
   patients_requests: boolean = false;
   view_patient_models: boolean = false;
   view_imagiologist_models: boolean = false;
-  upload_imagiologist: boolean = false;
-  view_doctor_models: boolean = false;
-  view_doctor_patients: boolean = false;
   upload_doctor: boolean = false;
 
   private async getRole(): Promise<void> {
@@ -72,9 +71,6 @@ export class HomeComponent implements OnInit{
     this.patients_requests = false;
     this.view_patient_models = false;
     this.view_imagiologist_models = false;
-    this.upload_imagiologist = false;
-    this.view_doctor_models = false;
-    this.view_doctor_patients = false;
     this.upload_doctor = false;
   }
 
@@ -84,9 +80,6 @@ export class HomeComponent implements OnInit{
     this.patients_requests = false;
     this.view_patient_models = false;
     this.view_imagiologist_models = false;
-    this.upload_imagiologist = false;
-    this.view_doctor_models = false;
-    this.view_doctor_patients = false;
     this.upload_doctor = false;
   }
 
@@ -96,9 +89,6 @@ export class HomeComponent implements OnInit{
     this.staff_requests = false;
     this.view_patient_models = false;
     this.view_imagiologist_models = false;
-    this.upload_imagiologist = false;
-    this.view_doctor_models = false;
-    this.view_doctor_patients = false;
     this.upload_doctor = false;
   }
 
@@ -108,9 +98,6 @@ export class HomeComponent implements OnInit{
     this.staff_requests = false;
     this.patients_requests = false;
     this.view_imagiologist_models = false;
-    this.upload_imagiologist = false;
-    this.view_doctor_models = false;
-    this.view_doctor_patients = false;
     this.upload_doctor = false;
   }
 
@@ -121,8 +108,14 @@ export class HomeComponent implements OnInit{
     this.patients_requests = false;
     this.view_patient_models = false;
     this.view_imagiologist_models = false;
-    this.upload_imagiologist = false;
-    this.view_doctor_models = false;
-    this.view_doctor_patients = false;
+  }
+
+  showImagiologistModels() {
+    this.view_imagiologist_models = true;
+    this.home_body = false;
+    this.staff_requests = false;
+    this.patients_requests = false;
+    this.view_patient_models = false;
+    this.upload_doctor = false;
   }
 }

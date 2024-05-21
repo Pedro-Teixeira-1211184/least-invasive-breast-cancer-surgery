@@ -29,6 +29,19 @@ export default class UserServiceOnion implements IUserServiceOnion {
     ) {
     }
 
+    public async getUsersByRole(role: string): Promise<Result<IUserDTO[]>> {
+        try {
+            const users = await this.userRepo.findByRole(role);
+            if (users.length === 0) {
+                return Result.fail<IUserDTO[]>("No users found");
+            }
+            const userDTOs = users.map(user => UserMap.toDTO(user));
+            return Result.ok<IUserDTO[]>(userDTOs);
+        } catch (e) {
+            throw e;
+        }
+    }
+
     public async getPatientById(patientId: string): Promise<Result<IPatientDTO>> {
         try {
             const user = await this.userRepo.findPatientById(patientId);

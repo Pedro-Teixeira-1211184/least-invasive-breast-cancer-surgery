@@ -228,17 +228,15 @@ export default (app: Router) => {
 
     // PATIENTS PATH
 
-    app.use('/patients', route);
+    route.get('/patient', (req: Request, res: Response, next: NextFunction) => ctrl.getAllPatients(req, res, next));
 
-    route.get('', (req: Request, res: Response, next: NextFunction) => ctrl.getAllPatients(req, res, next));
-
-    route.get('/:id', (req: Request, res: Response, next: NextFunction) => ctrl.getPatientById(req, res, next));
+    route.get('/patient/:id', (req: Request, res: Response, next: NextFunction) => ctrl.getPatientById(req, res, next));
 
     // USERS PATH
 
-    app.use('/users', route);
+    route.get('/user', (req: Request, res: Response, next: NextFunction) => ctrl.getAllUsers(req, res, next));
 
-    route.get('', (req: Request, res: Response, next: NextFunction) => ctrl.getAllUsers(req, res, next));
+    route.get('/user/role/:id', (req: Request, res: Response, next: NextFunction) => ctrl.getUsersByRoleId(req, res, next));
 
     route.get('/me', middlewares.isAuth, middlewares.attachCurrentUser, user_controller.getMe);
 };

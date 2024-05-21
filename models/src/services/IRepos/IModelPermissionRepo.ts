@@ -10,4 +10,5 @@ export default interface IModelPermissionRepo extends Repo<ModelPermission> {
     findByModelId(modelId: string): Promise<ModelPermission[]>;
     delete(id: string): Promise<ModelPermission>;
     deleteByModelId(modelId: string): Promise<ModelPermission[]>;
+    findByImagiologistId(imagiologistId: string): Promise<ModelPermission[]>;
 }

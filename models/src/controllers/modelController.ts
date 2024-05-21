@@ -21,6 +21,33 @@ export default class ModelController implements IModelController /* TODO: extend
     ) {
     }
 
+    public async getModelsByImagiologistId(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {
+        try {
+            console.log('Getting model by imagiologist id...');
+            const imagiologistId = req.params.id;
+
+            const model = await this.modelPermissionServiceInstance.getModelPermissionByImagiologistId(imagiologistId);
+
+            if (model.isFailure) {
+                return res.status(404).json(model.errorValue());
+            }
+
+            // get array of models from model permission modelIds
+            const modelDTOS: IModelDTO[] = [];
+            for (const modelPermission of model.getValue()) {
+                const model = await this.modelServiceInstance.findById(modelPermission.modelId);
+                if (model.isFailure) {
+                    return res.status(404).json(model.errorValue());
+                }
+                modelDTOS.push(model.getValue());
+            }
+
+            return res.status(200).json(modelDTOS);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     public async deleteModelPermissionByModelId(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {
         try {
             console.log('Deleting model permission by model id...');

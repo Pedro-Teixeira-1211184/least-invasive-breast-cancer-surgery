@@ -31,4 +31,6 @@ export default (app: Router) => {
       }),
     }),
     (req, res, next) => ctrl.updateRole(req, res, next) );
+
+  route.get('/:name', (req, res, next) => ctrl.getRoleByName(req, res, next) );
 };

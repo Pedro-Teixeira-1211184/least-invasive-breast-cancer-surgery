@@ -1,1 +1,57 @@
-<p>models-imag works!</p>
+<div class="model-table-container">
+  <h2>Models</h2>
+  <table class="model-table">
+    <thead>
+    <tr>
+      <th>Patient</th>
+      <th>Healthcare Number</th>
+      <th>Description</th>
+      <th class="download-column">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let model of models">
+      <td>{{ model.patient }}</td>
+      <td>{{ model.sns }}</td>
+      <td>{{ model.description }}</td>
+      <td class="download-column">
+        <button (click)="downloadModel(model)" class="download-button">
+          <span class="material-symbols-rounded">download</span>
+        </button>
+        <button (click)="deleteModel(model)" class="delete-button">
+          <span class="material-symbols-rounded">delete</span>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="upload-container">
+  <form class="upload-form" id="roomForm" [formGroup]="uploadForm" #formDir="ngForm">
+    <h2>Upload a new model</h2>
+    <div class="form-group">
+      <div class="form-group">
+        <label for="file">Choose a file:</label>
+        <input type="file" id="file" (change)="onFileSelected($event)"/>
+      </div>
+      <label for="patient">Patient</label>
+      <select id="patient" formControlName="patient" required>
+        <option *ngFor="let patient of patients"
+                [value]="patient.id">{{ patient.firstName }} {{ patient.lastName }} - {{ patient.sns }}
+        </option>
+      </select>
+      <label for="description">Description</label>
+      <textarea type="text" id="description" formControlName="description" placeholder="Description" rows="3"
+                required></textarea>
+    </div>
+  </form>
+  <label>Select doctors:</label>
+  <div *ngFor="let doctor of doctors" class="checkbox-group">
+    <input type="checkbox" [(ngModel)]="doctor.checked">{{ doctor.firstName }} {{ doctor.lastName }}
+    - {{ doctor.email }}
+  </div>
+  <button type="submit" class="upload-button" (click)="onSubmit()">
+    <span class="material-symbols-rounded">upload</span>
+  </button>
+</div>

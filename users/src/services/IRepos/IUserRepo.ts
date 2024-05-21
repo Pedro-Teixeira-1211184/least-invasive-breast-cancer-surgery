@@ -21,4 +21,6 @@ export default interface IUserRepo extends Repo<User> {
     findAll(): Promise<User[]>;
 
     findAllPatients(): Promise<Patient[]>;
+
+    findByRole(role: string): Promise<User[]>;
 }

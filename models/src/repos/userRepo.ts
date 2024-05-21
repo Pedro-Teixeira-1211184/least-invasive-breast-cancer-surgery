@@ -8,6 +8,7 @@ import {IPatientPersistence} from "../dataschema/IPatientPersistence";
 import {Patient} from '../domain/patient';
 import {PatientMap} from "../mappers/PatientMap";
 import {IUserPersistence} from "../dataschema/IUserPersistence";
+import {UserId} from "../domain/userId";
 
 @Service()
 export default class UserRepo implements IUserRepo {
@@ -18,6 +19,15 @@ export default class UserRepo implements IUserRepo {
         @Inject('userSchema') private userSchema: Model<IUserPersistence & Document>,
         @Inject('logger') private logger
     ) {
+    }
+
+    public async existImagiologistById(imagiologistId: UserId | string): Promise<boolean> {
+        const idX = imagiologistId instanceof UserId ? (<UserId>imagiologistId).id.toValue() : imagiologistId;
+
+        const query = {domainId: idX};
+        const userDocument = await this.userSchema.findOne(query);
+
+        return !!userDocument === true;
     }
 
     public async existDoctorById(doctorId: string): Promise<boolean> {
