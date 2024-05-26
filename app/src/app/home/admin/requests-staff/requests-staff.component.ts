@@ -45,7 +45,6 @@ export class RequestsStaffComponent implements OnInit {
 
   public async accept(request: ISignUpRequestDTO & { role: string }): Promise<void> {
     if (request.role != null || request.role != undefined) {
-      console.log(request)
       await this.auth_service.signUpStaff(request.firstName, request.lastName, request.email, request.password, request.role)
     }
     //refresh content
