@@ -1,0 +1,12 @@
+@startuml
+actor "Admin" as OE
+
+activate OE
+OE -> ":UI" : 1 : Pede os pedidos de registo
+activate ":UI"
+":UI" --> OE : 1.1 : Mostra os pedidos de registo
+deactivate ":UI"
+
+deactivate ":UI"
+
+@enduml
