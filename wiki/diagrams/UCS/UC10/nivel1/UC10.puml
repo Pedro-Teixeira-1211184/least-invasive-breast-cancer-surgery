@@ -1,0 +1,9 @@
+@startuml
+actor "Médico" as OE
+
+activate OE
+activate ":UI"
+OE -> ":UI" : 1 : Pede os modelos de uma dada paciente
+":UI" --> OE : 1.1 : retorna lista de modelos
+
+@enduml

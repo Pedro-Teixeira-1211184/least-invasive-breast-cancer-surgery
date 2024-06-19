@@ -9,7 +9,7 @@
 | 5                 | Médico/Imagiologista | Carregar modelo 3D                                 | Done   |
 | 6                 | Imagiologista        | Atribuir permissões de acesso de modelos a médicos | Done   |
 | 7                 | Paciente             | Obter modelos 3D pessoais                          | Done   |
-| 8                 | Médico               | Consultar imagens                                  | Done   |
+| 8                 | Médico/Imagiologista | Obter modelos de pacientes a que tem acesso        | Done   |
 | 9                 | Médico               | Descarregar modelo 3D                              | Done   |
 | 10                | Médico               | Obter modelos 3D por paciente                      | Done   |
 | 11                | Médico               | eliminar modelo 3D                                 | Done   |

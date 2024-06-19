@@ -24,7 +24,24 @@ export default (app: Router) => {
         }
     });
 
-    const upload = multer({storage: storage});
+    // Define file filter to accept only .obj files
+    const fileFilter = (req, file, cb) => {
+        const filetypes = /obj/;
+        const mimetype = filetypes.test(file.mimetype);
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+        if (mimetype && extname) {
+            return cb(null, true);
+        } else {
+            cb(new Error('Only .obj files are allowed!'), false);
+        }
+    };
+
+    // Configure multer with storage and file filter
+    const upload = multer({
+        storage: storage,
+        fileFilter: fileFilter
+    });
 
     // Route for uploading a single .obj file
     route.post('/', upload.single('file'), celebrate({

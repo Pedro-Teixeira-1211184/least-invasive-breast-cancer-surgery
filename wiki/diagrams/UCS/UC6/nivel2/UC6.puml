@@ -1,10 +1,10 @@
 @startuml
 participant "LIBCS UI" as UI
-participant "LIBCS" as API
+participant "LIBCS - models" as API
 
 activate UI
 activate API
-UI -> API : 1 : .post(/permission)
+UI -> API : 1 : .post(model/permission)
 API -> API : 1.1 : guarda permissão \n de acesso a um dado modelo
 API --> UI : 2 : response status
 

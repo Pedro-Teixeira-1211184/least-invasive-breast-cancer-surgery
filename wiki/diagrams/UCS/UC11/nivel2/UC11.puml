@@ -4,8 +4,8 @@ participant "LIBCS - models" as API
 
 activate UI
 activate API
-UI -> API : 1 : .post(/model)
-API -> API : 1.1 : guarda modelo
-API --> UI : 2 : response status
+UI -> API : 1 : .delete(model/:id)
+API -> API : 1.1 : Elimina o modelo
+API --> UI : 2 : Mensagem de sucesso
 
 @enduml

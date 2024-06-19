@@ -14,45 +14,40 @@ participant ":modelSchema" as BSchema
 
 activate UI
 activate API
-UI -> API : .get('model/patient/:id')
-API -> BC : getModelByPatientId(req, res, next)
+UI -> API : .get('model/:id')
+API -> BC : downloadModel(req, res, next)
 activate BC
-BC -> BC : patientId = req.params.id;
-BC -> BS : models = findByPatientId(patientId)
+BC -> BC : id = req.params.id;
+BC -> BS : model = findById(id)
 activate BS
-BS -> BR : models = findByPatientId(patientId)
+BS -> BR : model = findById(id)
 activate BR
-BR -> BSchema : doc = find(query)
+BR -> BSchema : doc = findOne(query)
 activate BSchema
 BSchema --> BR : persistence
 deactivate BSchema
-loop
-BR -> BM : models = toDomain(request)
+BR -> BM : model = toDomain(doc)
 activate BM
-BM -> B : create()
+BM --> B : create(doc)
 activate B
-BM <-- B : model
+B --> BM : model
 deactivate B
-BR <-- BM : model
+BM --> BR : model
 deactivate BM
-end
-BR --> BS : models
+BR --> BS : model
 deactivate BR
-loop
-BS -> BM : models = toDTO(models)
+BS -> BM : modelDTO = toDTO(model)
 activate BM
-BM -> DTO : create()
+BM -> DTO : create(model)
 activate DTO
-BM <-- DTO : model
+DTO --> BM : dto
 deactivate DTO
-BM --> BS : model
+BM --> BS : dto
 deactivate BM
-end
-BS --> BC : models
+BS --> BC : modelDTO
 deactivate BS
-BC --> API : models and status
+BC --> API : res.download(modelDTO.path)
 deactivate BC
-API --> UI : models and status
-
+API --> UI : res.download(modelDTO.path)
 
 @enduml

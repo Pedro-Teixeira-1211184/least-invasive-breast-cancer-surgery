@@ -1,5 +1,5 @@
 @startuml
-actor "Paciente" as OE
+actor "Médico/Imagiologista" as OE
 
 activate OE
 activate ":UI"

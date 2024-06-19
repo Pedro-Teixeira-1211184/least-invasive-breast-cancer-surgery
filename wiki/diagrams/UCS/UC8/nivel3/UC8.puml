@@ -2,7 +2,7 @@
 
 autonumber
 participant "LIBCS UI" as UI
-participant "LIBCS" as API
+participant "LIBCS - models" as API
 participant ":modelController" as BC
 participant ":modelService" as BS
 participant ":modelPermissionService" as BPS
@@ -20,7 +20,7 @@ participant ":modelPermissionSchema" as BPSchema
 
 activate UI
 activate API
-UI -> API : .get('/doctor/:id')
+UI -> API : .get('model/[doctor/imagiologist]/:id')
 API -> BC : getModelsByDoctorId(req, res, next)
 activate BC
 BC -> BC : doctorId = req.params.id;

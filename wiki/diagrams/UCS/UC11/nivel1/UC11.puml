@@ -1,0 +1,9 @@
+@startuml
+actor "Médico" as OE
+
+activate OE
+activate ":UI"
+OE -> ":UI" : 1 : Pede para eliminar um modelo
+":UI" --> OE : 1.1 : Mensagem de confirmação
+
+@enduml

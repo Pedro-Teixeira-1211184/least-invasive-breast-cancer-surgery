@@ -20,7 +20,7 @@ participant ":modelPermissionSchema" as MPSchema
 
 activate UI
 activate API
-UI -> API : .post(/permission)
+UI -> API : .post(model/permission)
 API -> BC : createModelPermission(req, res, next)
 activate BC
 BC -> MPS : result = createModelPermission(modelPermissionDTO)

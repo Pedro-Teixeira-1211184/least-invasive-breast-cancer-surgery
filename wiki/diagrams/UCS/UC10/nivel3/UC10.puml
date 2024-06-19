@@ -14,45 +14,44 @@ participant ":modelSchema" as BSchema
 
 activate UI
 activate API
-UI -> API : .get('model/patient/:id')
-API -> BC : getModelByPatientId(req, res, next)
+UI -> API : .get('model/:patientId')
+API -> BC : downloadModel(req, res, next)
 activate BC
-BC -> BC : patientId = req.params.id;
-BC -> BS : models = findByPatientId(patientId)
+BC -> BC : patientId = req.params.patientId;
+BC -> BS : models = findByPatientId(id)
 activate BS
-BS -> BR : models = findByPatientId(patientId)
+BS -> BR : models = findByPatientId(id)
 activate BR
-BR -> BSchema : doc = find(query)
+BR -> BSchema : doc = findOne(query)
 activate BSchema
 BSchema --> BR : persistence
 deactivate BSchema
-loop
-BR -> BM : models = toDomain(request)
+loop for each doc
+BR -> BM : model = toDomain(doc)
 activate BM
-BM -> B : create()
+BM --> B : create(doc)
 activate B
-BM <-- B : model
+B --> BM : model
 deactivate B
-BR <-- BM : model
+BM --> BR : model
 deactivate BM
 end
 BR --> BS : models
 deactivate BR
-loop
-BS -> BM : models = toDTO(models)
+loop for each model
+BS -> BM : modelsDTO = toDTO(model)
 activate BM
-BM -> DTO : create()
+BM -> DTO : create(model)
 activate DTO
-BM <-- DTO : model
+DTO --> BM : dto
 deactivate DTO
-BM --> BS : model
-deactivate BM
+BM --> BS : dto
 end
-BS --> BC : models
+deactivate BM
+BS --> BC : modelsDTO
 deactivate BS
 BC --> API : models and status
 deactivate BC
 API --> UI : models and status
-
 
 @enduml
