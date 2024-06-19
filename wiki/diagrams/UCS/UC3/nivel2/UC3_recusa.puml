@@ -1,0 +1,11 @@
+@startuml
+participant "LIBCS UI" as UI
+participant "LIBCS" as API
+
+activate UI
+activate API
+UI -> API : 1 : .delete(/request/:email)
+API -> API : 1.1 : elimina pedido com dado email
+API --> UI : 2 : response status
+
+@enduml

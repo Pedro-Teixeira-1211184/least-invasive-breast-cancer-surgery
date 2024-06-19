@@ -1,0 +1,99 @@
+@startuml
+
+autonumber
+participant "LIBCS UI" as UI
+participant "LIBCS" as API
+participant ":userController" as BC
+participant ":userService" as BS
+participant ":userRepo" as BR
+participant ":roleRepo" as RR
+participant ":userSchema" as BSchema
+participant ":roleSchema" as RSchema
+participant ":userMap" as BM
+participant ":roleMap" as RM
+participant ":userDTO" as DTO
+participant "u:user" as B
+participant "r:role" as R
+
+
+activate UI
+activate API
+UI -> API : .post(/request)
+API -> BC : getAllUserRequests(req, res, next)
+activate BC
+BC -> BS : user = signup()
+activate BS
+BS -> BR : userDocument = findByEmail(userDTO.email)
+activate BR
+BR -> BSchema : record = findOne(query)
+activate BSchema
+BSchema -> BM : user = mapToDTO(record)
+activate BM
+BM -> B : userDTO = mapToDTO(record)
+activate B
+B --> BM : user
+deactivate B
+BM --> BSchema : user
+deactivate BM
+BSchema --> BR : record
+deactivate BSchema
+BR --> BS : record
+deactivate BR
+BS -> BS : createPasswordHash(userDTO.password)
+BS -> BS : userDocument = createUserEmail(userDTO.email)
+BS -> RR : role = findByDomainId(roleId)
+activate RR
+RR -> RSchema : record = findOne(query)
+activate RSchema
+RSchema --> RR : record
+deactivate RSchema
+RR -> RM : role = toDomain(record)
+activate RM
+RM -> R : role = toDomain(record)
+activate R
+R --> RM : role
+deactivate R
+RM --> RR : role
+deactivate RM
+RR --> BS : role
+deactivate RR
+BS -> B : user = create(userDTO, role)
+activate B
+B --> BS : user
+deactivate B
+BS -> BR : userDocument = save(user)
+activate BR
+BR -> BM : persistence = toPersistence(user)
+activate BM
+BM --> BR : persistence
+deactivate BM
+BR -> BSchema : user = create(rawUser)
+activate BSchema
+BSchema --> BR : user
+deactivate BSchema
+BR -> BM: user = toDomain(user)
+activate BM
+BM -> B : user = toDomain(user)
+activate B
+B --> BM : user
+deactivate B
+BM --> BR : user
+deactivate BM
+BR --> BS : user
+deactivate BR
+BS -> BM : user = toDTO(user)
+activate BM
+BM -> DTO : userDTO = toDTO(user)
+activate DTO
+DTO --> BM : userDTO
+deactivate DTO
+BM --> BS : userDTO
+deactivate BM
+BS --> BC : userDTO
+deactivate BS
+BC --> API : userDTO and status
+deactivate BC
+API --> UI : userDTO and status
+deactivate API
+
+@enduml

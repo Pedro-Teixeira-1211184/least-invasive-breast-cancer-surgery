@@ -1,0 +1,12 @@
+@startuml
+actor "Admin" as OE
+
+activate OE
+OE -> ":UI" : 1 : Recusa pedido
+activate ":UI"
+":UI" --> OE : 1.1 : pedido eliminado
+deactivate ":UI"
+
+deactivate ":UI"
+
+@enduml

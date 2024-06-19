@@ -1,0 +1,12 @@
+@startuml
+actor "Admin" as OE
+
+activate OE
+OE -> ":UI" : 1 : Aceita pedido
+activate ":UI"
+":UI" --> OE : 1.1 : user registado na plataforma
+deactivate ":UI"
+
+deactivate ":UI"
+
+@enduml

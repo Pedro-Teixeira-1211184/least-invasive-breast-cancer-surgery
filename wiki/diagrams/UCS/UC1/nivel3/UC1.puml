@@ -1,0 +1,76 @@
+@startuml
+
+autonumber
+participant "LIBCS UI" as UI
+participant "LIBCS" as API
+participant ":userController" as BC
+participant ":userService" as BS
+participant ":signUpRequestRepo" as BR
+participant ":signUpRequestSchema" as BSchema
+participant ":signUpRequestMap" as BM
+participant ":signUpRequestDTO" as DTO
+participant "s:signUpRequest" as B
+
+
+activate UI
+activate API
+UI -> API : .post(/request)
+API -> BC : signUpRequest(req, res, next)
+activate BC
+BC -> BS : signUpRequest(req.body)
+activate BS
+BS -> BR : user = findByEmail(userDTO.email)
+activate BR
+BR -> BSchema : user = findOne(query)
+activate BSchema
+BSchema -> BM : user = toDomain(user)
+activate BM
+BM -> B : user = toDomain(user)
+activate B
+B --> BM : user
+deactivate B
+BM --> BSchema : user
+deactivate BM
+BSchema --> BR : user
+deactivate BSchema
+BR --> BS : user
+deactivate BR
+BS -> B : user = create(userDTO)
+activate B
+B --> BS : user
+deactivate B
+BS -> BS : hashPassword(user)
+BS -> BR : save = save(user)
+activate BR
+BR -> BM : rawUser = toPersistence(user)
+activate BM
+BM --> BR : persistence
+deactivate BM
+BR --> BSchema : create(rawUser)
+activate BSchema
+BSchema --> BR : persistence
+deactivate BSchema
+BR --> BM : request = toDomain(persistence)
+activate BM
+BM --> B : request
+activate B
+B --> BM : request
+deactivate B
+BM --> BR : request
+deactivate BM
+BR --> BS : request
+deactivate BR
+BS -> BM : request = toDTO(request)
+activate BM
+BM --> BS : request
+deactivate BM
+BS -> BC : res.status(201).send(request)
+deactivate BS
+BC -> API : next()
+deactivate BC
+API -> UI : res.status(201).send(request)
+deactivate API
+
+
+
+@enduml
