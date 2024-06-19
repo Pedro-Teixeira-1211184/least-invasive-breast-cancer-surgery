@@ -1,0 +1,9 @@
+@startuml
+actor "Imagiologista" as OE
+
+activate OE
+activate ":UI"
+OE -> ":UI" : 1 : Indica modelo e medicos que podem consultar
+":UI" --> OE : 1.1 : Mensagem de status da operação
+
+@enduml

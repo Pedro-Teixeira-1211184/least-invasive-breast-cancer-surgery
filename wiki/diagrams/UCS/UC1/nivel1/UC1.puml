@@ -2,13 +2,10 @@
 actor "User" as OE
 
 activate OE
-OE -> ":UI" : 1 : Inicia requisição
 activate ":UI"
+OE -> ":UI" : 1 : Inicia requisição
 ":UI" --> OE : 1.1 : Pede dados do "User"
 OE -> ":UI" : 1.2 : Digita dados
 ":UI" --> OE : 2 : Mostra mensagem de erro/sucesso
-deactivate ":UI"
-
-deactivate ":UI"
 
 @enduml

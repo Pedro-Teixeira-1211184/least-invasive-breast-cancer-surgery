@@ -1,0 +1,9 @@
+@startuml
+actor "Admin/Imagiologista" as OE
+
+activate OE
+activate ":UI"
+OE -> ":UI" : 1 : Carrega modelo 3D da paciente
+":UI" --> OE : 1.1 : Mensagem de status da operação
+
+@enduml

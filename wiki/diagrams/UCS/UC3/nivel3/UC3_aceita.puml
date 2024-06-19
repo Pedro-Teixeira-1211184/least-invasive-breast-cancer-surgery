@@ -94,6 +94,5 @@ deactivate BS
 BC --> API : userDTO and status
 deactivate BC
 API --> UI : userDTO and status
-deactivate API
 
 @enduml

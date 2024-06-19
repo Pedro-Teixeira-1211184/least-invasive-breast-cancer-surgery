@@ -1,0 +1,58 @@
+@startuml
+
+autonumber
+participant "LIBCS UI" as UI
+participant "LIBCS" as API
+participant ":modelController" as BC
+participant ":modelService" as BS
+participant ":modelRepo" as BR
+participant ":modelMap" as BM
+participant ":modelDTO" as DTO
+participant "m:model" as B
+participant ":modelSchema" as BSchema
+
+
+activate UI
+activate API
+UI -> API : .get('/patient/:id')
+API -> BC : getModelByPatientId(req, res, next)
+activate BC
+BC -> BC : patientId = req.params.id;
+BC -> BS : models = findByPatientId(patientId)
+activate BS
+BS -> BR : models = findByPatientId(patientId)
+activate BR
+BR -> BSchema : doc = find(query)
+activate BSchema
+BSchema --> BR : persistence
+deactivate BSchema
+loop
+BR -> BM : models = toDomain(request)
+activate BM
+BM -> B : create()
+activate B
+BM <-- B : model
+deactivate B
+BR <-- BM : model
+deactivate BM
+end
+BR --> BS : models
+deactivate BR
+loop
+BS -> BM : models = toDTO(models)
+activate BM
+BM -> DTO : create()
+activate DTO
+BM <-- DTO : model
+deactivate DTO
+BM --> BS : model
+deactivate BM
+end
+BS --> BC : models
+deactivate BS
+BC --> API : models and status
+deactivate BC
+API --> UI : models and status
+
+
+@enduml

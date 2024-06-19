@@ -1,0 +1,98 @@
+@startuml
+
+autonumber
+participant "LIBCS UI" as UI
+participant "LIBCS - models" as API
+participant ":modelController" as BC
+participant ":modelPermissionService" as MPS
+participant ":userRepo" as BR
+participant ":modelRepo" as MR
+participant ":modelPermissionRepo" as MPR
+participant ":modelMap" as MM
+participant ":modelPermissionMap" as MPM
+participant ":modelPermissionDTO" as DTO
+participant "o:objModel" as M
+participant "m:modelPermission" as MP
+participant ":userSchema" as BSchema
+participant ":modelSchema" as MSchema
+participant ":modelPermissionSchema" as MPSchema
+
+
+activate UI
+activate API
+UI -> API : .post(/permission)
+API -> BC : createModelPermission(req, res, next)
+activate BC
+BC -> MPS : result = createModelPermission(modelPermissionDTO)
+activate MPS
+MPS -> BR : doctor = existUserById(modelPermission.doctorId)
+activate BR
+BR -> BSchema : doc = findOne(query)
+activate BSchema
+BSchema --> BR : persistence
+deactivate BSchema
+BR --> MPS : (!!doc === true)
+deactivate BR
+MPS -> BR : imagiologist = existUserById(modelPermission.imagiologistId)
+activate BR
+BR -> BSchema : doc = findOne(query)
+activate BSchema
+BSchema --> BR : persistence
+deactivate BSchema
+BR --> MPS : (!!doc === true)
+deactivate BR
+MPS -> MR : model = findById(modelPermission.modelId)
+activate MR
+MR -> MSchema : persistence = findOne(query)
+activate MSchema
+MSchema --> MR : persistence
+deactivate MSchema
+MR -> MM : model = toDomain(persistence)
+activate MM
+MM --> M : create()
+activate M
+M --> MM : model
+deactivate M
+MM --> MR : model
+deactivate MM
+MR --> MPS : model
+deactivate MR
+MPS -> MP : modelPermission = create(model)
+activate MP
+MP --> MPS : modelPermission
+deactivate MP
+MPS -> MPR : modelPermission = save(modelPermission)
+activate MPR
+MPR --> MPM : persistence = toPersistence(modelPermission)
+activate MPM
+MPM --> MPR : persistence
+deactivate MPM
+MPR --> MPSchema : doc = create(persistence)
+activate MPSchema
+MPSchema --> MPR : persistence
+deactivate MPSchema
+MPR --> MPM : toDomain(persistence)
+activate MPM
+MPM --> MP : create()
+activate MP
+MP --> MPM : modelPermission
+deactivate MP
+MPM --> MPR : modelPermission
+deactivate MPM
+MPR --> MPS : modelPermission
+deactivate MPR
+MPS --> MPM : toDTO(modelPermission)
+activate MPM
+MPM --> DTO : create()
+activate DTO
+DTO --> MPM : modelPermissionDTO
+deactivate DTO
+MPM --> MPS : modelPermissionDTO
+deactivate MPM
+MPS --> BC : modelPermissionDTO
+deactivate MPS
+BC --> API : dto and status
+deactivate BC
+API --> UI : dto and status
+
+@enduml

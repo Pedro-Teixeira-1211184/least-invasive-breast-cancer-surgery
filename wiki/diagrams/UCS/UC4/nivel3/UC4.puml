@@ -1,0 +1,47 @@
+@startuml
+
+autonumber
+participant "LIBCS UI" as UI
+participant "LIBCS" as API
+participant ":userController" as BC
+participant ":userService" as BS
+participant ":userRepo" as BR
+participant ":userMap" as BM
+participant ":userDTO" as DTO
+participant "u:user" as B
+participant ":userSchema" as BSchema
+
+
+activate UI
+activate API
+UI -> API : .get(/user)
+API -> BC : getAllUsers(req, res, next)
+activate BC
+BC -> BS : users = getAll()
+activate BS
+BS -> BR : users = getAll()
+activate BR
+BR -> BSchema : users = find()
+activate BSchema
+BSchema --> BR : users
+deactivate BSchema
+loop
+BR -> BM : usersArray = toDTO(request)
+activate BM
+BM -> DTO : create DTO
+activate DTO
+BM <-- DTO : return DTO
+deactivate DTO
+BR <-- BM : users = DTO's
+deactivate BM
+end
+BR --> BS : users
+deactivate BR
+BS --> BC : users
+deactivate BS
+BC --> API : users and status
+deactivate BC
+API --> UI : users and status
+
+
+@enduml

@@ -1,0 +1,60 @@
+@startuml
+
+autonumber
+participant "LIBCS UI" as UI
+participant "LIBCS" as API
+participant ":userController" as BC
+participant ":userService" as BS
+participant ":signUpRequestRepo" as BR
+participant ":signUpRequestSchema" as BSchema
+participant ":signUpRequestMap" as BM
+participant ":signUpRequestDTO" as DTO
+participant "s:signUpRequest" as B
+
+
+activate UI
+activate API
+UI -> API : .delete(/request/:email)
+API -> BC : deleteUserRequest(req, res, next)
+activate BC
+BC -> BC : email = req.params.email
+BC -> BS : deleteUserRequest(email)
+activate BS
+BS -> BR : request = findByEmail(email)
+activate BR
+BR -> BSchema : persistence = findOne(query)
+activate BSchema
+BSchema -> BR : persistence
+deactivate BSchema
+BR -> BM : map = toDomain(persistence)
+activate BM
+BM -> B : create()
+activate B
+B --> BM : signUpRequest
+deactivate B
+BM -> BR : signUpRequest
+deactivate BM
+BR -> BS : signUpRequest
+deactivate BR
+BS -> BR : delete(request)
+activate BR
+BR -> BSchema : deleteOne(query)
+activate BSchema
+deactivate BSchema
+BR -> BM : toDTO(Request)
+activate BM
+BM -> DTO : create()
+activate DTO
+DTO --> BM : signUpRequestDTO
+deactivate DTO
+BM -> BR : signUpRequestDTO
+deactivate BM
+BR -> BS : signUpRequestDTO
+deactivate BR
+BS -> BC : signUpRequestDTO
+deactivate BS
+BC -> API : signUpRequestDTO and status
+deactivate BC
+API -> UI : signUpRequest and status
+
+@enduml

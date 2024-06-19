@@ -1,0 +1,11 @@
+@startuml
+participant "LIBCS UI" as UI
+participant "LIBCS" as API
+
+activate UI
+activate API
+UI -> API : 1 : .get('/patient/:id')
+API -> API : 1.1 : obtém modelos da paciente
+API --> UI : 2 : retorna modelos
+
+@enduml

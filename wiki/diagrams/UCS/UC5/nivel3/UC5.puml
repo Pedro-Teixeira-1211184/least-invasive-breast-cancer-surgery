@@ -1,0 +1,96 @@
+@startuml
+
+autonumber
+participant "LIBCS UI" as UI
+participant "LIBCS - models" as API
+participant ":modelController" as BC
+participant ":userService" as BS
+participant ":modelService" as MS
+participant ":userRepo" as BR
+participant ":modelRepo" as MR
+participant ":userMap" as BM
+participant ":modelMap" as MM
+participant ":userDTO" as DTO
+participant "u:user" as B
+participant "o:objModel" as M
+participant ":userSchema" as BSchema
+participant ":modelSchema" as MSchema
+
+
+activate UI
+activate API
+UI -> API : .post(/model, upload.single('file'))
+API -> BC : uploadModel(req, res, next)
+activate BC
+BC -> BC : path = req.file.path;
+BC -> BS : patient = findUserByUserId(userId)
+activate BS
+BS -> BR : patient = findUserByUserId(userId)
+activate BR
+BR -> BSchema : persistence = findOne(query)
+activate BSchema
+BSchema -> BR : persistence
+deactivate BSchema
+BR -> BM : user = toDomain(persistence)
+activate BM
+BM -> B : create(persistence)
+activate B
+B --> BM : user
+deactivate B
+BM --> BR : user
+deactivate BM
+BR --> BS : user
+deactivate BR
+BS -> BM : dto = toDTO(user)
+activate BM
+BM -> DTO : dto = toDTO(user)
+activate DTO
+DTO --> BM : dto
+deactivate DTO
+BM --> BS : dto
+deactivate BM
+BS --> BC : dto
+deactivate BS
+BC -> BC : modelDTO = {patientId, description, path}
+BC -> MS : model = uploadModel(modelDTO)
+activate MS
+MS -> M : model = create(modelDTO)
+activate M
+M --> MS : model
+deactivate M
+MS --> MR : save = save(model)
+activate MR
+MR -> MM : persistence = toPersistence(model)
+activate MM
+MM --> MR : persistence
+deactivate MM
+MR -> MSchema: doc = create(persistence)
+activate MSchema
+MSchema --> MR : model
+deactivate MSchema
+MR -> MM : model = toDomain(doc)
+activate MM
+MM -> M : create(doc)
+activate M
+M --> MM : model
+deactivate M
+MM --> MR : model
+deactivate MM
+MR --> MS : model
+deactivate MR
+MS -> MM : toDTO(model)
+activate MM
+MM -> DTO : dto = toDTO(model)
+activate DTO
+DTO --> MM : dto
+deactivate DTO
+MM --> MS : dto
+deactivate MM
+MS --> BC : dto
+deactivate MS
+BC -> API : model and status
+deactivate BC
+API -> UI : model and status
+
+
+@enduml

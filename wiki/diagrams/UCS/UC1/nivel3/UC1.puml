@@ -69,8 +69,5 @@ deactivate BS
 BC -> API : next()
 deactivate BC
 API -> UI : res.status(201).send(request)
-deactivate API
-
-
 
 @enduml
