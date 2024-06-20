@@ -59,8 +59,11 @@ export class UploadDoctorComponent implements OnInit {
     const response = await this.service.getModelByDoctorId(doctorId);
     if (response.length === 0) {
       this.noModels = true;
+      this.patientsInsideTheTable = [];
+      this.models = [];
     } else {
       this.models = response;
+      this.patientsInsideTheTable = [];
       await this.updateModelsInfo();
     }
   }

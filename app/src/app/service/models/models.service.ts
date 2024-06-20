@@ -138,7 +138,7 @@ export class ModelsService {
       if (response.status === 200) {
         return await response.json();
       } else {
-        return null;
+        alert(await response.json());
       }
     } catch (e) {
       console.error(e)

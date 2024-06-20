@@ -10,6 +10,7 @@ import IModelDTO from "../dto/IModelDTO";
 import {ParsedQs} from 'qs';
 import IUserServiceOnion from "../services/IServices/IUserServiceOnion";
 import IModelPermissionService from "../services/IServices/IModelPermissionService";
+import fs from "fs";
 
 
 @Service()
@@ -176,6 +177,18 @@ export default class ModelController implements IModelController /* TODO: extend
             const {patientId, description} = req.body;
             // @ts-ignore
             const path = req.file.path;
+
+            // file type validation
+            if (!path.endsWith('.obj')) {
+                const fs = require('fs');
+                fs.unlink(path, (err: any) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                });
+                return res.status(403).json('Invalid file type. Please upload a .obj file');
+            }
 
             //check if patient exists
             const patient = await this.userServiceInstance.findPatientByPatientId(patientId);
