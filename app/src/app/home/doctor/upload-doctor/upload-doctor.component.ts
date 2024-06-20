@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, ElementRef, inject, OnInit} from '@angular/core';
 import {NgForOf} from "@angular/common";
 import IModelDTO from "../../../dto/IModelDTO";
 import {ModelsService} from "../../../service/models/models.service";
@@ -37,7 +37,10 @@ export class UploadDoctorComponent implements OnInit {
   models: (IModelDTO & { patient: string, sns: number })[] = [];
   noModels: boolean = false;
   selectedFile: File | null = null;
+  selectedPatient: string = 'all';
   patients: IPatientDTO[] = [];
+  patientsInsideTheTable: IPatientDTO[] = [];
+  filteredModels: (IModelDTO & { patient: string, sns: number })[] = [];
 
   service: ModelsService = inject(ModelsService);
   auth_service: AuthService = inject(AuthService);
@@ -96,7 +99,14 @@ export class UploadDoctorComponent implements OnInit {
       if (response2) {
         console.log('Model deleted successfully.');
         alert('Model deleted successfully.');
-        this.models = this.models.filter(m => m.id !== model.id);
+        // Atualiza a lista de modelos
+        const docId = localStorage.getItem('id');
+        if (docId === null) {
+          return;
+        }
+        await this.getModelsByDoctorId(docId);
+        // Atualiza o patientSelect
+        this.changeSelectValue('all')
       } else {
         alert('Error deleting model.');
       }
@@ -105,12 +115,22 @@ export class UploadDoctorComponent implements OnInit {
     }
   }
 
+  // Método para alterar o valor do select
+  private changeSelectValue(value: string): void {
+    this.selectedPatient = value;
+    this.onPatientChange();
+  }
+
   private async updateModelsInfo() {
     for (let i = 0; i < this.models.length; i++) {
       const patientId = this.models[i].patientId;
       const patient = await this.auth_service.getPatientById(patientId);
       this.models[i].patient = patient.firstName + ' ' + patient.lastName;
       this.models[i].sns = patient.sns;
+      if (this.patientsInsideTheTable.find(p => p.id === patient.id) === undefined) {
+        this.patientsInsideTheTable.push(patient);
+      }
+      this.filteredModels = this.models; // Exibe todos os modelos
     }
 
     // Sort models by patient name
@@ -148,6 +168,14 @@ export class UploadDoctorComponent implements OnInit {
     const file: File = event.target.files[0];
     if (file) {
       this.selectedFile = file;
+    }
+  }
+
+  public onPatientChange(): void {
+    if (this.selectedPatient === 'all') {
+      this.filteredModels = this.models; // Exibe todos os modelos
+    } else {
+      this.filteredModels = this.models.filter(model => model.patientId === this.selectedPatient);
     }
   }
 }

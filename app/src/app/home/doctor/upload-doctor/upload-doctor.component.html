@@ -1,5 +1,13 @@
 <div class="model-table-container">
   <h2>Models</h2>
+  <div class="search-container">
+    <label for="patient">Patient</label>
+    <select id="patientSelect" [(ngModel)]="selectedPatient" (change)="onPatientChange()">
+      <option value="all">Selecionar todos os pacientes</option>
+      <option *ngFor="let patient of patientsInsideTheTable" [value]="patient.id">{{ patient.firstName }} {{ patient.lastName }} - {{ patient.sns }}
+      </option>
+    </select>
+  </div>
   <table class="model-table">
     <thead>
     <tr>
@@ -10,7 +18,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let model of models">
+    <tr *ngFor="let model of filteredModels">
       <td>{{ model.patient }}</td>
       <td>{{ model.sns }}</td>
       <td>{{ model.description }}</td>
@@ -37,10 +45,13 @@
       </div>
       <label for="patient">Patient</label>
       <select id="patient" formControlName="patient" required>
-        <option *ngFor="let patient of patients" [value]="patient.id">{{ patient.firstName }} {{patient.lastName}} - {{patient.sns}}</option>
+        <option *ngFor="let patient of patients" [value]="patient.id">{{ patient.firstName }} {{ patient.lastName }}
+          - {{ patient.sns }}
+        </option>
       </select>
       <label for="description">Description</label>
-      <textarea type="text" id="description" formControlName="description" placeholder="Description" rows="3" required></textarea>
+      <textarea type="text" id="description" formControlName="description" placeholder="Description" rows="3"
+                required></textarea>
     </div>
     <button type="submit" class="upload-button">
       <span class="material-symbols-rounded">upload</span>

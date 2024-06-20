@@ -1,6 +1,24 @@
 /* Importar a fonte Material Symbols */
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0');
 
+.search-container {
+  margin-bottom: 10px; /* Espaço entre o dropdown e a tabela */
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.search-container label {
+  margin-right: 10px; /* Espaço entre o label e o select */
+}
+
+.search-container select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
 .model-table-container {
   padding: 20px;
 }
