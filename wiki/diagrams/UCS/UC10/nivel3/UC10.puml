@@ -15,7 +15,7 @@ participant ":modelSchema" as BSchema
 activate UI
 activate API
 UI -> API : .get('model/:patientId')
-API -> BC : downloadModel(req, res, next)
+API -> BC : getPatientModels(req, res, next)
 activate BC
 BC -> BC : patientId = req.params.patientId;
 BC -> BS : models = findByPatientId(id)
