@@ -26,8 +26,7 @@ export default (app: Router) => {
 
     // Configure multer with storage and file filter
     const upload = multer({
-        storage: storage,
-        //fileFilter: fileFilter
+        storage: storage
     });
 
     // Route for uploading a single .obj file

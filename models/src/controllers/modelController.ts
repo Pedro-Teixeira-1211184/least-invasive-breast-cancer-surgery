@@ -142,7 +142,6 @@ export default class ModelController implements IModelController /* TODO: extend
         try {
             console.log('Getting model by patient id...');
             const patientId = req.params.id;
-
             const model = await this.modelServiceInstance.findByPatientId(patientId);
 
             if (model.isFailure) {
