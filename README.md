@@ -4,11 +4,9 @@ Unity project that explores the integration of photoacoustic technology to visua
 
 ## Part Developed in Unity
 Due to the size of the Unity project, the complete source code is not present in this repository. Instead, a brief demonstration and description of the Unity project are available [here](unity.md).
-## Non Functional Requirements
-[Here](wiki/requirements/non-functional/non-functional-requirements.md)
 
-## Functional requirements
-![Functional requirements](wiki/diagrams/use case global/UCD2.png)
+## Requirements
+The requirements for the project are available [here](requirements.md).
 
 ## Architecture
 
