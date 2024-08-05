@@ -1,0 +1,35 @@
+@startuml
+
+left to right direction
+skinparam usecase {
+BackgroundColor LightBlue
+}
+
+actor Doctor as med
+actor Patient as pac
+actor Imagiologist as img
+actor Admin as adm
+
+adm --> (1.Get register requests)
+adm --> (2.Accept/deny register requests)
+adm --> (3.Get all users)
+med --> (7.Ask for register in the platform)
+img --> (7.Ask for register in the platform)
+med --> (8.Register patient)
+img --> (8.Register patient)
+med --> (9.Save texture images)
+img --> (9.Save texture images)
+med --> (11.Check images)
+med --> (10.Link images to patient)
+img --> (10.Link images to patient)
+med --> (6.Define which doctors can see the images)
+img --> (6.Define which doctors can see the images)
+pac --> (4.Identification availability)
+pac --> (5.Get personal 3D models)
+med --> (12.Upload 3D model)
+med --> (13.Download 3D model)
+med --> (14.Get 3D models by patient)
+med --> (15.Delete 3D model)
+
+
+@enduml
